@@ -1,0 +1,8 @@
+/.settings/
+.project
+/.DS_Store
+*.idea/*
+**.iml
+**/*rebel.xml
+*/target/*
+*catalina.base_IS_UNDEFINED/*
