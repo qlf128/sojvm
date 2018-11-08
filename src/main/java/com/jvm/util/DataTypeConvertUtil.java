@@ -1,4 +1,4 @@
-package util;
+package com.jvm.util;
 
 /**
  * int和其他基本类型转换类
