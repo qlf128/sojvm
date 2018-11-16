@@ -114,7 +114,7 @@ public class OperandStack {
         slots[size].setObj(object);
         size++;
     }
-    public Object getObj(){
+    public Object popObj(){
         size--;
         Object obj = slots[size].getObj();
         // 方便垃圾回收
@@ -122,5 +122,19 @@ public class OperandStack {
         return obj;
     }
 
+    /**
+     *  栈指令 入栈
+     */
+    public void pushSlot(Slot slot){
+        slots[size] =slot;
+        size++;
+    }
+    /**
+     *  栈指令 出栈
+     */
+    public Slot popSlot(){
+        size--;
+        return slots[size];
+    }
 
 }

@@ -37,4 +37,20 @@ public class Frame {
     public void setLower(Frame lower) {
         this.lower = lower;
     }
+
+    public LocalVars getLocalVars() {
+        return localVars;
+    }
+
+    public void setLocalVars(LocalVars localVars) {
+        this.localVars = localVars;
+    }
+
+    public OperandStack getOperandStack() {
+        return operandStack;
+    }
+
+    public void setOperandStack(OperandStack operandStack) {
+        this.operandStack = operandStack;
+    }
 }
