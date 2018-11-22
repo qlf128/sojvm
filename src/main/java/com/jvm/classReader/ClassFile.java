@@ -2,6 +2,8 @@ package com.jvm.classReader;
 
 import com.jvm.classReader.model.MemberInfo;
 
+import java.io.InputStream;
+
 /**
  * @Description
  * @Auther mikicomo
@@ -12,7 +14,7 @@ public class ClassFile {
     public long magic;
     public int minorVersion;
     public int majorVersion;
-    //    public ConstantPool constantPool;
+    public ConstantPool constantPool;
     public int accessFlag;
     public String className;
     public String superClass;
@@ -23,51 +25,150 @@ public class ClassFile {
     public int methodCount;
     public MemberInfo[] methods;
 
-    public long Magic() {
-        return magic;
+    public ClassFile() {
     }
 
+    /**
+     * 解析ClassFile
+     *
+     * @param classData
+     * @return
+     * @throws Exception
+     */
+    public ClassFile Parse(InputStream classData) throws Exception {
+        if (classData == null) {
+            throw new Exception("ClassFile InputSream is null");
+        }
+
+        return null;
+    }
+
+    /**
+     * 读取ClassFile
+     *
+     * @param classData
+     * @return
+     * @throws Exception
+     */
+    public ClassFile read(InputStream classData) throws Exception {
+        if (classData == null) {
+            throw new Exception("ClassFile InputSream is null");
+        }
+
+        return null;
+    }
+
+    /**
+     * 读取并且检查魔数
+     *
+     * @param classData
+     * @throws Exception
+     */
+    private void readAndCheckMagic(InputStream classData) throws Exception {
+        if (classData == null) {
+            throw new Exception("ClassFile InputSream is null");
+        }
+
+    }
+
+    /**
+     * 读取并且检查版本号
+     *
+     * @param classData
+     * @throws Exception
+     */
+    private void readAndCheckVersion(InputStream classData) throws Exception {
+        if (classData == null) {
+            throw new Exception("ClassFile InputSream is null");
+        }
+
+    }
+
+    /**
+     * 副办本号
+     *
+     * @return
+     */
     public int MinorVersion() {
-        return minorVersion;
+
+        return 0;
     }
 
+    /**
+     * 主版本号
+     *
+     * @return
+     */
     public int MajorVersion() {
-        return majorVersion;
+
+        return 0;
     }
 
-    public int AccessFlag() {
-        return accessFlag;
+    /**
+     * 常量池
+     *
+     * @return
+     */
+    public ConstantPool ConstantPool() {
+
+        return null;
     }
 
-    public String ClassName() {
-        return className;
+    /**
+     * 访问标志
+     *
+     * @return
+     */
+    public int AccessFlags() {
+
+        return 0;
     }
 
-    public String SuperClass() {
-        return superClass;
-    }
-
-    public int InterfaceCount() {
-        return interfaceCount;
-    }
-
-    public String[] Interfaces() {
-        return interfaces;
-    }
-
-    public int FieldCount() {
-        return fieldCount;
-    }
-
+    /**
+     * 变量
+     *
+     * @return
+     */
     public MemberInfo[] Fields() {
-        return fields;
+
+        return null;
     }
 
-    public int MethodCount() {
-        return methodCount;
-    }
-
+    /**
+     * 方法
+     *
+     * @return
+     */
     public MemberInfo[] Methods() {
-        return methods;
+
+        return null;
     }
+
+    /**
+     * 类名
+     *
+     * @return
+     */
+    public String ClassName() {
+        return null;
+    }
+
+    /**
+     * 父类名
+     *
+     * @return
+     */
+    public String SuperClassName() {
+        return null;
+    }
+
+    /**
+     * 接口名
+     *
+     * @return
+     */
+    public String[] InterfaceNames() {
+        return null;
+    }
+
 }
