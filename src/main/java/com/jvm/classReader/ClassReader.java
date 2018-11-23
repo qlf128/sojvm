@@ -1,83 +1,81 @@
 package com.jvm.classReader;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
+import com.jvm.util.ByteUtils;
 
 /**
  * @Description
  * @Auther mikicomo
- * @Date 2018/11/13 00:11
+ * @Date 2018-11-24 19:01
  */
+
 public class ClassReader {
 
-    private static Logger logger = LoggerFactory.getLogger(ClassReader.class);
+    private byte[] data;
+    private int index = 0;
 
-    /**
-     * 功能描述: u1 解析
-     *
-     * @auther mikicomo
-     * @date 2018/11/13
-     */
-    public static short readU1(InputStream inputStream) {
-        byte[] bytes = new byte[1];
-        try {
-            inputStream.read(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        short value = (short) (bytes[0] & 0xFF);
-        return value;
+    public ClassReader(byte[] data) {
+        this.data = data;
+    }
+
+    // u1
+    public byte readUint8() {
+        byte res = data[index++];
+        return res;
+    }
+
+
+    // u2 这里是读取一个无符号的16位整,用int来代替吧;
+    public int readUint16() {
+        byte[] res = new byte[2];
+        res[0] = data[index++];
+        res[1] = data[index++];
+        return ByteUtils.bytesToU16(res);
+    }
+
+    // u4
+    public byte[] readUint32() {
+        byte[] res = new byte[4];
+        res[0] = data[index++];
+        res[1] = data[index++];
+        res[2] = data[index++];
+        res[3] = data[index++];
+//        return ByteUtils.bytesToU32(res);
+        return res;
+    }
+
+    public byte[] readUint64() {
+        byte[] res = new byte[8];
+        res[0] = data[index++];
+        res[1] = data[index++];
+        res[2] = data[index++];
+        res[3] = data[index++];
+        res[4] = data[index++];
+        res[5] = data[index++];
+        res[6] = data[index++];
+        res[7] = data[index++];
+        return res;
     }
 
     /**
-     * 功能描述: u2 解析
+     * 读取连续的16bit长的数组,首先读出16bit,用来表示接下来要去读的多少个16bit
      *
-     * @auther mikicomo
-     * @date 2018/11/13
+     * @return
      */
-    public static int readU2(InputStream inputStream) {
-        //bytes作为缓冲数组存储两个字节
-        //class文件中字符以U-16编码
-        byte[] bytes = new byte[2];
-        try {
-            inputStream.read(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public int[] readUint16s() {
+        int n = readUint16();
+        int[] data = new int[n];
+        for (int i = 0; i < n; i++) {
+            data[i] = readUint16();
         }
-        //将缓冲数组中的两个字节解析成字符。
-        int num = 0;
-        for (byte aByte : bytes) {
-
-            // num=num*2^8
-            num <<= 8;
-
-            num |= (aByte & 0xff);
-        }
-        return num;
+        return data;
     }
 
-    /**
-     * 功能描述: u4 解析
-     *
-     * @auther mikicomo
-     * @date 2018/11/13
-     */
-    public static long readU4(InputStream inputStream) {
-        byte[] bytes = new byte[4];
-        try {
-            inputStream.read(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public byte[] readBytes(int n) {
+        byte[] res = new byte[n];
+        for (int i = 0; i < n; i++) {
+            res[i] = data[index++];
         }
-        long num = 0;
-        for (byte aByte : bytes) {
-            num <<= 8;
-            num |= (aByte & 0xff);
-        }
-        return num;
+        return res;
     }
 
 }

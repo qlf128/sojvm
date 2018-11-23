@@ -1,43 +1,44 @@
-package com.jvm.classReader.model;
+package com.jvm.classReader.model.constant;
 
 import com.jvm.classReader.ClassReader;
-import com.jvm.classReader.ConstantInfo;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UTFDataFormatException;
 
 /**
  * @Description
  * @Auther mikicomo
- * @Date 2018/11/18 14:56
+ * @Date 2018-11-24 16:54
  */
-public class ConstantUtf8 extends ConstantInfo {
-    public String value;
+
+public class ConstantUtf8Info extends ConstantInfo {
+    public String val;
+
+    public ConstantUtf8Info(int i) {
+        type = i;
+    }
+
 
     @Override
-    public void read(InputStream inputStream) {
-        int length = ClassReader.readU2(inputStream);
-        byte[] bytes = new byte[length];
+    void readInfo(ClassReader reader) {
+        int len = reader.readUint16();
+        byte[] data = reader.readBytes(len);
         try {
-            inputStream.read(bytes);
+            val = decodeMUTF8(data);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            value = readUtf8(bytes);
-        } catch (UTFDataFormatException e) {
             e.printStackTrace();
         }
     }
 
-    private String readUtf8(byte[] bytearr) throws UTFDataFormatException {
+    //将MUTF8转为UTF8编码, 根据java.io.DataInputStream.readUTF（）方法改写。
+    private static String decodeMUTF8(byte[] bytearr) throws IOException {
+        int utflen = bytearr.length;
+        char[] chararr = new char[utflen];
         int c, char2, char3;
         int count = 0;
         int chararr_count = 0;
-        char[] chararr = new char[bytearr.length];
 
-        while (count < bytearr.length) {
+        while (count < utflen) {
             c = (int) bytearr[count] & 0xff;
             if (c > 127) {
                 break;
@@ -46,7 +47,7 @@ public class ConstantUtf8 extends ConstantInfo {
             chararr[chararr_count++] = (char) c;
         }
 
-        while (count < bytearr.length) {
+        while (count < utflen) {
             c = (int) bytearr[count] & 0xff;
             switch (c >> 4) {
                 case 0:
@@ -65,14 +66,12 @@ public class ConstantUtf8 extends ConstantInfo {
                 case 13:
                     /* 110x xxxx   10xx xxxx*/
                     count += 2;
-                    if (count > bytearr.length) {
-                        throw new UTFDataFormatException(
-                                "malformed input: partial character at end");
+                    if (count > utflen) {
+                        throw new UTFDataFormatException("malformed input: partial character at end");
                     }
                     char2 = (int) bytearr[count - 1];
                     if ((char2 & 0xC0) != 0x80) {
-                        throw new UTFDataFormatException(
-                                "malformed input around byte " + count);
+                        throw new UTFDataFormatException("malformed input around byte " + count);
                     }
                     chararr[chararr_count++] = (char) (((c & 0x1F) << 6) |
                             (char2 & 0x3F));
@@ -80,7 +79,7 @@ public class ConstantUtf8 extends ConstantInfo {
                 case 14:
                     /* 1110 xxxx  10xx xxxx  10xx xxxx */
                     count += 3;
-                    if (count > bytearr.length) {
+                    if (count > utflen) {
                         throw new UTFDataFormatException(
                                 "malformed input: partial character at end");
                     }
@@ -102,5 +101,9 @@ public class ConstantUtf8 extends ConstantInfo {
         }
         // The number of chars produced may be less than utflen
         return new String(chararr, 0, chararr_count);
+    }
+
+    public String getVal() {
+        return val;
     }
 }

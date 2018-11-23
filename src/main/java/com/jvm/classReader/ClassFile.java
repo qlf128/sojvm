@@ -1,174 +1,141 @@
 package com.jvm.classReader;
 
-import com.jvm.classReader.model.MemberInfo;
-
-import java.io.InputStream;
+import com.jvm.classReader.model.attribute.AttributeInfo;
+import com.jvm.classReader.model.attribute.SourceFileAttribute;
+import com.jvm.util.ByteUtils;
 
 /**
  * @Description
  * @Auther mikicomo
- * @Date 2018/11/13 00:05
+ * @Date 2018-11-24 19:01
  */
+
 public class ClassFile {
 
-    public long magic;
-    public int minorVersion;
-    public int majorVersion;
+    private int minorVersion;
+    private int majorVersion;
     public ConstantPool constantPool;
-    public int accessFlag;
-    public String className;
-    public String superClass;
-    public int interfaceCount;
-    public String[] interfaces;
-    public int fieldCount;
-    public MemberInfo[] fields;
-    public int methodCount;
-    public MemberInfo[] methods;
+    private int accessFlags;
 
-    public ClassFile() {
+    private int thisClass;
+    private int superClass;
+    private int[] interfaces;
+    private MemberInfo[] fields;
+    private MemberInfo[] methods;
+    private AttributeInfo[] attributes;
+
+
+    public ClassFile(byte[] classData) {
+        ClassReader reader = new ClassReader(classData);
+        read(reader);
     }
 
     /**
-     * 解析ClassFile
+     * 读取class文件,解析各个字段
      *
-     * @param classData
-     * @return
-     * @throws Exception
+     * @param reader
      */
-    public ClassFile Parse(InputStream classData) throws Exception {
-        if (classData == null) {
-            throw new Exception("ClassFile InputSream is null");
+    private void read(ClassReader reader) {
+        readAndCheckMagic(reader);
+        readAndCheckVersion(reader);
+        constantPool = new ConstantPool(reader);
+        accessFlags = reader.readUint16();
+        thisClass = reader.readUint16();
+        superClass = reader.readUint16();
+        interfaces = reader.readUint16s();
+        fields = MemberInfo.readMembers(reader, constantPool);
+        methods = MemberInfo.readMembers(reader, constantPool);
+        attributes = AttributeInfo.readAttributes(reader, constantPool);
+    }
+
+
+    /**
+     * 魔数是64位无符号,所以不能简单的使用long来表示,目前是将4个字节的byte数组转换为字符串,对比class文件的魔数
+     *
+     * @param reader
+     */
+    private void readAndCheckMagic(ClassReader reader) {
+        String magic = ByteUtils.bytesToHexString(reader.readUint32());
+        if (!magic.equals("CAFEBABE")) {
+            throw new RuntimeException("java.lang.ClassFormatError: magic!");
         }
-
-        return null;
     }
 
     /**
-     * 读取ClassFile
+     * 版本号
      *
-     * @param classData
-     * @return
-     * @throws Exception
+     * @param reader
      */
-    public ClassFile read(InputStream classData) throws Exception {
-        if (classData == null) {
-            throw new Exception("ClassFile InputSream is null");
+    private void readAndCheckVersion(ClassReader reader) {
+        minorVersion = reader.readUint16();
+        majorVersion = reader.readUint16();
+        if (majorVersion == 45) {
+            return;
         }
-
-        return null;
-    }
-
-    /**
-     * 读取并且检查魔数
-     *
-     * @param classData
-     * @throws Exception
-     */
-    private void readAndCheckMagic(InputStream classData) throws Exception {
-        if (classData == null) {
-            throw new Exception("ClassFile InputSream is null");
+        if (minorVersion == 0 && majorVersion >= 46 && majorVersion <= 52) {
+            return;
         }
-
+        throw new RuntimeException("java.lang.UnsupportedClassVersionError!");
     }
 
-    /**
-     * 读取并且检查版本号
-     *
-     * @param classData
-     * @throws Exception
-     */
-    private void readAndCheckVersion(InputStream classData) throws Exception {
-        if (classData == null) {
-            throw new Exception("ClassFile InputSream is null");
+    public int getMinorVersion() {
+        return minorVersion;
+    }
+
+    public int getMajorVersion() {
+        return majorVersion;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
+    public int getAccessFlags() {
+        return accessFlags;
+    }
+
+    public int getThisClass() {
+        return thisClass;
+    }
+
+    public int getSuperClass() {
+        return superClass;
+    }
+
+    public int[] getInterfaces() {
+        return interfaces;
+    }
+
+    public MemberInfo[] getFields() {
+        return fields;
+    }
+
+    public MemberInfo[] getMethods() {
+        return methods;
+    }
+
+    public AttributeInfo[] getAttributes() {
+        return attributes;
+    }
+
+    public String getClassName() {
+        return constantPool.getClassName(thisClass);
+    }
+
+    public String getSuperClassName() {
+        if (superClass > 0) {
+            return constantPool.getClassName(superClass);
+        } else {
+            return "";
         }
-
     }
 
-    /**
-     * 副办本号
-     *
-     * @return
-     */
-    public int MinorVersion() {
+    public String[] getInterfaceNames() {
+        String[] interfaceNames = new String[interfaces.length];
+        for (int i = 0; i < interfaceNames.length; i++) {
+            interfaceNames[i] = constantPool.getClassName(interfaces[i]);
+        }
+        return interfaceNames;
 
-        return 0;
     }
-
-    /**
-     * 主版本号
-     *
-     * @return
-     */
-    public int MajorVersion() {
-
-        return 0;
-    }
-
-    /**
-     * 常量池
-     *
-     * @return
-     */
-    public ConstantPool ConstantPool() {
-
-        return null;
-    }
-
-    /**
-     * 访问标志
-     *
-     * @return
-     */
-    public int AccessFlags() {
-
-        return 0;
-    }
-
-    /**
-     * 变量
-     *
-     * @return
-     */
-    public MemberInfo[] Fields() {
-
-        return null;
-    }
-
-    /**
-     * 方法
-     *
-     * @return
-     */
-    public MemberInfo[] Methods() {
-
-        return null;
-    }
-
-    /**
-     * 类名
-     *
-     * @return
-     */
-    public String ClassName() {
-        return null;
-    }
-
-    /**
-     * 父类名
-     *
-     * @return
-     */
-    public String SuperClassName() {
-        return null;
-    }
-
-    /**
-     * 接口名
-     *
-     * @return
-     */
-    public String[] InterfaceNames() {
-        return null;
-    }
-
 }
