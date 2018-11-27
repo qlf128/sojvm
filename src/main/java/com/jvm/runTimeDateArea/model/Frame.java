@@ -23,7 +23,7 @@ public class Frame {
     /**
      *  线程  实现跳转指令专用字段
      */
-    private Thread thread;
+    private SoThread thread;
 
     /**
      *  nextPc 实现跳转指令专用字段
@@ -36,7 +36,7 @@ public class Frame {
      * @param maxLocals
      * @param maxStack
      */
-    public Frame(Thread thread,int maxLocals,int maxStack) {
+    public Frame(SoThread thread, int maxLocals, int maxStack) {
         this.thread =thread;
         localVars = new LocalVars(maxLocals);
         operandStack = new OperandStack(maxStack);
@@ -67,11 +67,11 @@ public class Frame {
     }
 
 
-    public Thread getThread() {
+    public SoThread getThread() {
         return thread;
     }
 
-    public void setThread(Thread thread) {
+    public void setThread(SoThread thread) {
         this.thread = thread;
     }
 
