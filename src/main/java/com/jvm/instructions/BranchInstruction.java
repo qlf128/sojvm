@@ -14,4 +14,12 @@ public abstract class BranchInstruction implements Instructions{
 
     public abstract void execute(Frame frame);
 
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
 }
