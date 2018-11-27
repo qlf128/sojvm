@@ -13,6 +13,22 @@ public class DataTypeConvertUtil {
         return b & 0xFFFFFFFF;
     }
 
+    public static int byteArrayToInt(byte[] bArray){
+        int result;
+        result = bArray[0]
+                | bArray[1]<<8
+                | bArray[2]<<16
+                | bArray[3]<<24;
+        return result;
+    }
+
+    public static short byteArrayToShort(byte[] bArray){
+        int result;
+        result = bArray[0]
+                | bArray[1]<<8;
+        return (short)result;
+    }
+
     /**
      * short转int
      * @param s
@@ -21,6 +37,8 @@ public class DataTypeConvertUtil {
     public static int shortToInt(short s){
         return s & 0xFFFFFFFF;
     }
+
+
 
     /**
      * long转int
