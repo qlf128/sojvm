@@ -5,7 +5,7 @@ package com.jvm.runTimeDateArea.model;
  * @Date: 2018/11/11 11:21
  * @Description: 运行时的线程类
  */
-public class JavaThread {
+public class Thread {
     /**
      * PC 寄存器
      */
@@ -17,7 +17,7 @@ public class JavaThread {
     private  Stack stack;
 
 
-    public JavaThread() {
+    public Thread() {
         stack = new Stack(1024);
     }
 
@@ -45,7 +45,9 @@ public class JavaThread {
     }
 
 
-
+    public Frame NewFrame(int maxLocals, int maxStack){
+        return  new Frame(this,maxLocals,maxStack);
+    }
 
 
 

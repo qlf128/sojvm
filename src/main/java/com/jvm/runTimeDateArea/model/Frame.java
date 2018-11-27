@@ -21,11 +21,23 @@ public class Frame {
 
 
     /**
+     *  线程  实现跳转指令专用字段
+     */
+    private Thread thread;
+
+    /**
+     *  nextPc 实现跳转指令专用字段
+     */
+
+    private int nextPC;
+
+    /**
      * 局部变量表大小和操作数栈深度由编译期确定
      * @param maxLocals
      * @param maxStack
      */
-    public Frame(int maxLocals,int maxStack) {
+    public Frame(Thread thread,int maxLocals,int maxStack) {
+        this.thread =thread;
         localVars = new LocalVars(maxLocals);
         operandStack = new OperandStack(maxStack);
     }
@@ -52,5 +64,22 @@ public class Frame {
 
     public void setOperandStack(OperandStack operandStack) {
         this.operandStack = operandStack;
+    }
+
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    public void setThread(Thread thread) {
+        this.thread = thread;
+    }
+
+    public int getNextPC() {
+        return nextPC;
+    }
+
+    public void setNextPC(int nextPC) {
+        this.nextPC = nextPC;
     }
 }
