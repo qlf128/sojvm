@@ -32,4 +32,20 @@ public class IINC implements Instructions {
         val += consta;
         localVars.setInt(index,val);
     }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getConsta() {
+        return consta;
+    }
+
+    public void setConsta(int consta) {
+        this.consta = consta;
+    }
 }
