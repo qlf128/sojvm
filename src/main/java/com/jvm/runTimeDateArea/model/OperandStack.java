@@ -137,4 +137,9 @@ public class OperandStack {
         return slots[size];
     }
 
+    public  void pushRef(Object object){
+        slots[size].setObj(object);
+        size++;
+    }
+
 }
