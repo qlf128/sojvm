@@ -56,8 +56,19 @@ public class BytecodeReader {
         return readUint32();
     }
 
-    public void SkipPadding(){
+    public int[] readInt32s(int n){
+        int[] ints = new int[n];
+        for(int i=0; i<ints.length;i++){
+            ints[i] = readInt32();
+        }
 
+        return ints;
+    }
+
+    public void skipPadding(){
+        for(;this.getPc() % 4 != 0;){
+            readUint8();
+        }
     }
 
     public byte[] getCode() {
