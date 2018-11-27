@@ -3,11 +3,12 @@ package com.jvm.instructions.extended;
 import com.jvm.instructions.BytecodeReader;
 import com.jvm.instructions.Index8Instruction;
 import com.jvm.instructions.Instructions;
-import com.jvm.instructions.loads.ILOAD;
+import com.jvm.instructions.loads.*;
 import com.jvm.instructions.math.IINC;
-import com.jvm.instructions.stores.LSTORE;
+import com.jvm.instructions.stores.*;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.util.DataTypeConvertUtil;
+import com.jvm.util.NativeMethodUtil;
 
 /**
  * FetchOperands()方法先从字节码中读取一字节的操作码，然后创建子指令实例，最后读取子指 令的操作数。
@@ -70,7 +71,8 @@ public class WIDE implements Instructions{
                 inst.setConsta(byteCodeReader.readInt16());
                 this.setModifiedInstruction(inst);
             case 0xa9:
-                panic("Unsupported opcode: 0xa9!");
+                NativeMethodUtil.panic("Unsupported opcode: 0xa9!");
+
         }
     }
 

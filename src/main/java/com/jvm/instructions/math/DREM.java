@@ -4,6 +4,7 @@ import com.jvm.instructions.InstructionException;
 import com.jvm.instructions.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.OperandStack;
+import com.jvm.util.NativeMethodUtil;
 
 import static java.lang.Math.abs;
 
@@ -18,7 +19,7 @@ public class DREM  extends NoOperandsInstruction {
         double v1 = stack.popDouble();
 
         if(abs(v2) < 10e-8 ){
-            panic("java.lang.ArithmeticException: / by zero");
+            NativeMethodUtil.panic("java.lang.ArithmeticException: / by zero");
         }
 
         double result = v1 % v2;

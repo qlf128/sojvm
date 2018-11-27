@@ -22,7 +22,7 @@ public class FCMPL extends NoOperandsInstruction{
             stack.pushInt(0);
         }else if(v1 < v2){
             stack.pushInt(-1);
-        }else if gFlag{
+        }else if (gFlag) {
             stack.pushInt(1);
         }else{
             stack.pushInt(-1);

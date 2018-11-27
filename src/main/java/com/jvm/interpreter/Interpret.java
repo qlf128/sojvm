@@ -7,6 +7,7 @@ import com.jvm.instructions.Factory;
 import com.jvm.instructions.Instructions;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.SoThread;
+import com.jvm.util.NativeMethodUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,7 @@ public class Interpret {
         }catch(Exception e){
             log.error("LocalVars:{}",frame.getLocalVars().toString());
             log.error("OperandStack:{}",frame.getOperandStack().toString());
-            panic(e);
+            NativeMethodUtil.panic(e.getStackTrace().toString());
         }
     }
 
