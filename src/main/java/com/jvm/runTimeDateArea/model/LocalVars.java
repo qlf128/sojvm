@@ -76,10 +76,10 @@ public class LocalVars {
     /**
      *  存取Object 类型
      */
-    public void setObj(int index ,Object value){
+    public void setObj(int index ,SoObject value){
         slots[index].setObj(value);
     }
-    public Object getObj(int index){
+    public SoObject getObj(int index){
         return  slots[index].getObj();
     }
 }

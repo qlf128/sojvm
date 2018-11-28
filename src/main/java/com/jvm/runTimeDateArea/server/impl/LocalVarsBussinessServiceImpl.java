@@ -1,6 +1,7 @@
 package com.jvm.runTimeDateArea.server.impl;
 
 import com.jvm.runTimeDateArea.model.Frame;
+import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.runTimeDateArea.server.LocalVarsBussinessService;
 
 /**
@@ -36,7 +37,7 @@ public class LocalVarsBussinessServiceImpl implements LocalVarsBussinessService 
 
     @Override
     public void oLoad(Frame frame, int index) {
-        Object value = frame.getLocalVars().getObj(index);
+        SoObject value = frame.getLocalVars().getObj(index);
         frame.getOperandStack().pushObj(value);
     }
 }

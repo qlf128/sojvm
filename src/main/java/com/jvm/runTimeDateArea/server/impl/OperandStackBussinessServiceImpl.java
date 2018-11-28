@@ -3,6 +3,7 @@ package com.jvm.runTimeDateArea.server.impl;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.OperandStack;
 import com.jvm.runTimeDateArea.model.Slot;
+import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.runTimeDateArea.server.OperandStackBussinessService;
 
 /**
@@ -38,7 +39,7 @@ public class OperandStackBussinessServiceImpl implements OperandStackBussinessSe
     }
 
     @Override
-    public void pushOConst(Frame frame, Object value) {
+    public void pushOConst(Frame frame, SoObject value) {
         frame.getOperandStack().pushObj(value);
     }
 
@@ -69,7 +70,7 @@ public class OperandStackBussinessServiceImpl implements OperandStackBussinessSe
 
     @Override
     public void popOStore(Frame frame, int index) {
-        Object value = frame.getOperandStack().popObj();
+        SoObject value = frame.getOperandStack().popObj();
         frame.getLocalVars().setObj(index,value);
     }
 

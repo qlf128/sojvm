@@ -1,6 +1,7 @@
 package com.jvm.runTimeDateArea.server;
 
 import com.jvm.runTimeDateArea.model.Frame;
+import com.jvm.runTimeDateArea.model.SoObject;
 
 /**
  * @Author: wangfa
@@ -42,7 +43,7 @@ public interface OperandStackBussinessService {
     /**
      * 往操作数栈中添加 obj
      */
-    void pushOConst(Frame frame,Object value);
+    void pushOConst(Frame frame,SoObject value);
 
 
 

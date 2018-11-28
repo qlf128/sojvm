@@ -12,7 +12,7 @@ public class Slot {
      */
     private  int num;
 
-    private Object obj;
+    private SoObject obj;
 
 
     public int getNum() {
@@ -23,11 +23,11 @@ public class Slot {
         this.num = num;
     }
 
-    public Object getObj() {
+    public SoObject getObj() {
         return obj;
     }
 
-    public void setObj(Object obj) {
+    public void setObj(SoObject obj) {
         this.obj = obj;
     }
 }

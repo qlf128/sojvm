@@ -110,13 +110,13 @@ public class OperandStack {
     /**
      * 往栈顶放入Obj
      */
-    public  void pushObj(Object object){
+    public  void pushObj(SoObject object){
         slots[size].setObj(object);
         size++;
     }
-    public Object popObj(){
+    public SoObject popObj(){
         size--;
-        Object obj = slots[size].getObj();
+        SoObject obj = slots[size].getObj();
         // 方便垃圾回收
         slots[size]=null;
         return obj;
@@ -137,7 +137,7 @@ public class OperandStack {
         return slots[size];
     }
 
-    public  void pushRef(Object object){
+    public  void pushRef(SoObject object){
         slots[size].setObj(object);
         size++;
     }
