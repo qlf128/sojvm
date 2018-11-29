@@ -97,4 +97,12 @@ public class Frame {
     public void setNextPC(int nextPC) {
         this.nextPC = nextPC;
     }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    public void setMethod(Method method) {
+        this.method = method;
+    }
 }
