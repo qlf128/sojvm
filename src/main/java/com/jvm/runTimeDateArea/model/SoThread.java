@@ -1,5 +1,7 @@
 package com.jvm.runTimeDateArea.model;
 
+import com.jvm.soClassLoader.domain.Method;
+
 /**
  * @Author: wangfa
  * @Date: 2018/11/11 11:21
@@ -47,6 +49,9 @@ public class SoThread {
 
     public Frame NewFrame(int maxLocals, int maxStack){
         return  new Frame(this,maxLocals,maxStack);
+    }
+    public Frame NewFrame(Method method){
+        return  new Frame(this,method);
     }
 
 

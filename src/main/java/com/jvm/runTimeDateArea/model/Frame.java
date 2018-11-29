@@ -1,5 +1,7 @@
 package com.jvm.runTimeDateArea.model;
 
+import com.jvm.soClassLoader.domain.Method;
+
 /**
  * @Author: wangfa
  * @Date: 2018/11/11 11:51
@@ -31,6 +33,12 @@ public class Frame {
 
     private int nextPC;
 
+
+    /**
+     * method 实现new指令的专有字段
+     */
+    private Method method;
+
     /**
      * 局部变量表大小和操作数栈深度由编译期确定
      * @param maxLocals
@@ -40,6 +48,13 @@ public class Frame {
         this.thread =thread;
         localVars = new LocalVars(maxLocals);
         operandStack = new OperandStack(maxStack);
+    }
+
+    public Frame(SoThread thread, Method method) {
+        this.thread = thread;
+        this.method = method;
+        localVars = new LocalVars(method.getMaxLocals());
+        operandStack = new OperandStack(method.getMaxStack());
     }
 
     public Frame getLower() {
