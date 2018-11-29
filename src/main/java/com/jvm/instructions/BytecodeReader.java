@@ -1,6 +1,6 @@
 package com.jvm.instructions;
 
-import com.jvm.util.DataTypeConvertUtil;
+import com.jvm.util.UnsignedDataTypeConvertUtil;
 
 public class BytecodeReader {
     private byte[] code;//代码段
@@ -15,10 +15,10 @@ public class BytecodeReader {
 
     public int readUint8(){
         byte i = code[pc];
-        //TODO:把byte的uint转换成int
-
+        //把byte的uint转换成int
+        int result = UnsignedDataTypeConvertUtil.getUnsignedByte(i);
         pc++;
-        return i;
+        return result;
     }
 
     public int readInt8(){
@@ -29,31 +29,62 @@ public class BytecodeReader {
 
     public int readUint16(){
         byte byte1 = code[pc];
+        int ubyte1 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte1);
         pc++;
+
         byte byte2 = code[pc];
+        int ubyte2 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte2);
         pc++;
-        return (byte1 << 8) | byte2;
+
+        return (ubyte1 << 8) | ubyte2;
     }
 
     public int readInt16(){
-        return readUint16();
+        short s = (short)readUint16();
+        return (int)s;
     }
 
-    public int readUint32(){
-        int byte1 = code[pc];
-        pc++;
-        int byte2 = code[pc];
-        pc++;
-        int byte3 = code[pc];
-        pc++;
-        int byte4 = code[pc];
+    public long readUint32(){
+        byte byte1 = code[pc];
+        int ubyte1 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte1);
         pc++;
 
-        return (byte1 << 24) | (byte2 << 16) | (byte3 << 8) | byte4;
+        byte byte2 = code[pc];
+        int ubyte2 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte1);
+        pc++;
+
+        byte byte3 = code[pc];
+        int ubyte3 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte3);
+        pc++;
+
+        byte byte4 = code[pc];
+        int ubyte4 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte4);
+        pc++;
+
+        int result = (ubyte1 << 24) | (ubyte2 << 16) | (ubyte3 << 8) | ubyte4;
+        return UnsignedDataTypeConvertUtil.getUnsignedInt(result);
     }
 
     public int readInt32(){
-        return readUint32();
+        byte byte1 = code[pc];
+        int ubyte1 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte1);
+        pc++;
+
+        byte byte2 = code[pc];
+        int ubyte2 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte1);
+        pc++;
+
+        byte byte3 = code[pc];
+        int ubyte3 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte3);
+        pc++;
+
+        byte byte4 = code[pc];
+        int ubyte4 = UnsignedDataTypeConvertUtil.getUnsignedShort(byte4);
+        pc++;
+
+        int result = (ubyte1 << 24) | (ubyte2 << 16) | (ubyte3 << 8) | ubyte4;
+
+        return result;
     }
 
     public int[] readInt32s(int n){
