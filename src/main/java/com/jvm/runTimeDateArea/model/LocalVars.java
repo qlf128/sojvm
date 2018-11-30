@@ -55,7 +55,7 @@ public class LocalVars {
         int[] iArray = new int[2];
         iArray[0]= slots[index].getNum();
         iArray[1] = slots[index+1].getNum();
-        return  DataTypeConvertUtil.intToDouble(iArray);
+        return  DataTypeConvertUtil.intToDouble(iArray[0],iArray[1]);
     }
 
     /**
@@ -70,7 +70,7 @@ public class LocalVars {
         int[] iArray = new int[2];
         iArray[0]= slots[index].getNum();
         iArray[1] = slots[index+1].getNum();
-        return  DataTypeConvertUtil.intToLong(iArray);
+        return  DataTypeConvertUtil.intToLong(iArray[0],iArray[1]);
     }
 
     /**
