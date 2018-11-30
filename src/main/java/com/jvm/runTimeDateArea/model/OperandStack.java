@@ -85,7 +85,7 @@ public class OperandStack {
         int[] iArray = new int[2];
         iArray[0] = slots[size].getNum();
         iArray[1] = slots[size++].getNum();
-        double d = DataTypeConvertUtil.intToDouble(iArray);
+        double d = DataTypeConvertUtil.intToDouble(iArray[0],iArray[1]);
         return d;
     }
 
@@ -103,7 +103,7 @@ public class OperandStack {
         int[] iArray = new int[2];
         iArray[0] = slots[size].getNum();
         iArray[1] = slots[size++].getNum();
-        long l = DataTypeConvertUtil.intToLong(iArray);
+        long l = DataTypeConvertUtil.intToLong(iArray[0],iArray[1]);
         return  l;
     }
 
