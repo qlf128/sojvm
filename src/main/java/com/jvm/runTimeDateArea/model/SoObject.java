@@ -11,7 +11,8 @@ import java.util.logging.SocketHandler;
 public class SoObject {
     private SoClass soClass;
 
-    private LocalVars localVars;
+   // private LocalVars localVars;
+    private Object data;
 
     public SoClass getSoClass() {
         return soClass;
@@ -21,11 +22,38 @@ public class SoObject {
         this.soClass = soClass;
     }
 
-    public LocalVars getLocalVars() {
-        return localVars;
+    public void setData(Object data) {
+        this.data = data;
     }
 
-    public void setLocalVars(LocalVars localVars) {
-        this.localVars = localVars;
+    /**
+     *  得到普通对象数据
+     */
+    public Slot[] getData() {
+        return (Slot[])data;
+    }
+
+    /**
+     *  得到数组对象数据
+     */
+    public Object getArrayData(){
+        return  data;
+    }
+
+    public SoObject() {
+    }
+
+
+    /**
+     * 用来创建普通对象
+     */
+    public SoObject(SoClass soClass) {
+        this.soClass =soClass;
+        data = new Slot[soClass.getInstanceSlotCount()];
+    }
+
+    public SoObject(SoClass soClass, Object data) {
+        this.soClass = soClass;
+        this.data = data;
     }
 }

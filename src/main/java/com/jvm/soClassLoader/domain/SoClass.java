@@ -38,6 +38,10 @@ public class SoClass {
 
     private LocalVars staticVars;
 
+    public SoClass(){
+
+    }
+
     public SoClass(ClassFile classFile){
         this.accessFlags = classFile.getAccessFlags();
         this.name = classFile.getClassName();
@@ -219,4 +223,8 @@ public class SoClass {
     public void setStaticVars(LocalVars staticVars) {
         this.staticVars = staticVars;
     }
+
+    /**
+     * 创建对象 wf
+     */
 }
