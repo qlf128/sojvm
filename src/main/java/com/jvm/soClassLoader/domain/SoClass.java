@@ -3,6 +3,7 @@ package com.jvm.soClassLoader.domain;
 import com.jvm.classReader.ClassFile;
 import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.runTimeDateArea.model.Slot;
+import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
 
 /**
@@ -225,6 +226,9 @@ public class SoClass {
     }
 
     /**
-     * 创建对象 wf
+     * 创建对象 wf new指令
      */
+    public SoObject newObject(){
+        return new SoObject(this);
+    }
 }
