@@ -79,7 +79,8 @@ public class MethodDescriptorParser {
     }
 
     public String parseFieldType(){
-        switch (readUint8()){
+        int ascii = readUint8();
+        switch (ascii){
             case 'B':
                 return "B";
             case 'C':

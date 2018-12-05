@@ -12,7 +12,7 @@ import java.util.logging.SocketHandler;
 public class SoObject {
     private SoClass soClass;
 
-   // private LocalVars localVars;
+    private LocalVars localVars;
     private Object data;
 
     public SoObject(SoClass soClass, LocalVars localVars) {
@@ -30,6 +30,14 @@ public class SoObject {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public LocalVars getLocalVars() {
+        return localVars;
+    }
+
+    public void setLocalVars(LocalVars localVars) {
+        this.localVars = localVars;
     }
 
     /**

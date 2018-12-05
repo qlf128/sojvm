@@ -5,6 +5,8 @@ import com.jvm.classReader.MemberInfo;
 import com.jvm.classReader.model.attribute.CodeAttribute;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
 
+import java.util.List;
+
 /**
  * @author luao
  * @date 2018-11-12 16:07
@@ -44,8 +46,10 @@ public class Method extends ClassMember {
     }
 
     public void calcArgSlotCount(){
-        MethodDescriptor methodDescriptor = MethodDescriptorParser.parsedMethodDescriptor(super.getDescriptor());
-        for (String paramType : methodDescriptor.getParamTypes()){
+        String descriptor = super.getDescriptor();
+        MethodDescriptor methodDescriptor = MethodDescriptorParser.parsedMethodDescriptor(descriptor);
+        List<String> paramTypes = methodDescriptor.getParamTypes();
+        for (String paramType : paramTypes){
             this.argSlotCount++;
             if (paramType == null || paramType.isEmpty()){
                 continue;

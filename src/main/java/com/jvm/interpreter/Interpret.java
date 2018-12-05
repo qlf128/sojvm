@@ -13,9 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Interpret {
-    private final Logger log = LoggerFactory.getLogger(Interpret.class);
+    private static final Logger log = LoggerFactory.getLogger(Interpret.class);
 
-    public void interpret(Method method, boolean logInst){
+    public static void interpret(Method method, boolean logInst){
         SoThread soThread = new SoThread();
         Frame frame = soThread.NewFrame(method);
         soThread.pushFrame(frame);
@@ -27,7 +27,7 @@ public class Interpret {
         }
     }
 
-    private void loop(SoThread soThread, boolean logInst) {
+    private static void loop(SoThread soThread, boolean logInst) {
         BytecodeReader reader = new BytecodeReader();
         while (true){
             Frame frame = soThread.getCurrentFrame();
@@ -49,7 +49,7 @@ public class Interpret {
         }
     }
 
-    public void logInstruction(Frame frame, Instructions inst){
+    public static void logInstruction(Frame frame, Instructions inst){
         Method method = frame.getMethod();
         String className = method.getSoClass().getName();
         String methodName = method.getName();
@@ -57,7 +57,7 @@ public class Interpret {
         System.out.printf("%s.%s() #%2d %s \n",className,methodName,pc,inst.getClass().getSimpleName());
     }
 
-    public void logFrames(SoThread thread){
+    public static void logFrames(SoThread thread){
         while (!thread.isStackEmpty()){
             Frame frame = thread.popFrame();
             Method method = frame.getMethod();

@@ -16,14 +16,17 @@ import java.util.Map;
  */
 public class SoClassLoader {
 
-    private ReadClass readClass;
+    //private ReadClass readClass;
+    private String classFilePath;
+    private boolean verboseFlag;
 
     private Map<String,SoClass> soClassMap = new HashMap<>();;
 
     public SoClassLoader(){}
 
-    public SoClassLoader(ReadClass readClass){
-        this.readClass = readClass;
+    public SoClassLoader(String classFilePath, boolean verboseFlag) {
+        this.classFilePath = classFilePath;
+        this.verboseFlag = verboseFlag;
     }
 
     /**
@@ -47,7 +50,7 @@ public class SoClassLoader {
      * 1.️首先找到class文件并把数据读取到内存；
      * 2.然后解析class文件，生成虚拟机可以使用的类数据，并放入方法区；
      * 3.最后进行链接。
-     * @param name
+     * @param name class文件完整路径名
      * @return
      */
     private SoClass loadNonArrayClass(String name){
@@ -60,7 +63,7 @@ public class SoClassLoader {
 
     /**
      * 根据类路径读取字节码文件返回字节数据
-     * @param name
+     * @param name class文件完整路径名
      * @return
      */
     private byte[] readClass(String name){
@@ -252,12 +255,12 @@ public class SoClassLoader {
         }
     }
 
-    public ReadClass getReadClass() {
-        return readClass;
+    public String getClassFilePath() {
+        return classFilePath;
     }
 
-    public void setReadClass(ReadClass readClass) {
-        this.readClass = readClass;
+    public void setClassFilePath(String classFilePath) {
+        this.classFilePath = classFilePath;
     }
 
     public Map<String, SoClass> getSoClassMap() {

@@ -50,7 +50,8 @@ public class SoClass {
         this.name = classFile.getClassName();
         this.superClassName = classFile.getSuperClassName();
         this.interfaceNames = classFile.getInterfaceNames();
-        this.constantPool = constantPool.newConstantPool(this, classFile.getConstantPool());
+        com.jvm.classReader.ConstantPool cp = classFile.getConstantPool();
+        this.constantPool = com.jvm.soClassLoader.domain.ConstantPool.newConstantPool(this, cp);
         this.fields = Field.newFields(this, classFile.getFields());
         this.methods = Method.newMethods(this,classFile.getMethods());
     }
