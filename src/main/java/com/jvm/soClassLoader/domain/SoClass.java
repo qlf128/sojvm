@@ -41,6 +41,10 @@ public class SoClass {
     //使用一个布尔字段标识类的<clinit>方法是否已经开始执行
     private boolean initStarted;
 
+    public SoClass(){
+
+    }
+
     public SoClass(ClassFile classFile){
         this.accessFlags = classFile.getAccessFlags();
         this.name = classFile.getClassName();
@@ -254,5 +258,12 @@ public class SoClass {
 
     public void setInitStarted(boolean initStarted) {
         this.initStarted = initStarted;
+    }
+
+    /**
+     * 创建对象 wf new指令
+     */
+    public SoObject newObject(){
+        return new SoObject(this);
     }
 }

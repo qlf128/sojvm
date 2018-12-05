@@ -3,6 +3,8 @@ package com.jvm.runTimeDateArea.server.impl;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.runTimeDateArea.server.LocalVarsBussinessService;
+import com.jvm.soClassLoader.domain.ClassRef;
+import com.jvm.soClassLoader.domain.ConstantPool;
 
 /**
  * @Author: wangfa

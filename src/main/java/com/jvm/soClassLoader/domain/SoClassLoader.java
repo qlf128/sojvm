@@ -3,6 +3,7 @@ package com.jvm.soClassLoader.domain;
 import com.jvm.classReader.ClassFile;
 import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.search.ReadClass;
+import com.jvm.soClassLoader.constants.AccessFlagConstant;
 import com.jvm.soClassLoader.util.FileUtil;
 
 import java.io.IOException;
@@ -33,6 +34,10 @@ public class SoClassLoader {
     public SoClass loadClass(String name){
         if(soClassMap!=null&&soClassMap.containsKey(name)){
             return soClassMap.get(name);
+        }
+        // 添加Array
+        if(name.startsWith("[")){
+            return this.loadArrayClass(name);
         }
         return this.loadNonArrayClass(name);
     }
@@ -261,5 +266,27 @@ public class SoClassLoader {
 
     public void setSoClassMap(Map<String, SoClass> soClassMap) {
         this.soClassMap = soClassMap;
+    }
+
+
+    /**
+     *  新增 加载 数组对象 wf
+     */
+    public SoClass loadArrayClass(String name){
+
+        SoClass soClass = new SoClass();
+        soClass.setAccessFlags(AccessFlagConstant.ACC_PUBLIC);
+        soClass.setName(name);
+        soClass.setSoClassLoader(this);
+        //todo 设置initStarted
+        soClass.setSuperClass(this.loadClass("java/lang/Object"));
+        SoClass[] interfaces = new SoClass[2];
+        interfaces[0] = this.loadClass("java/lang/Cloneable");
+        interfaces[1] = this.loadClass("java/io/Serializable");
+        soClass.setInterfaces(interfaces);
+        HashMap map = new HashMap<>();
+        map.put(name,soClass);
+        this.setSoClassMap(map);
+        return soClass;
     }
 }
