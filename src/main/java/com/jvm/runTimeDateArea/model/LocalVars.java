@@ -11,6 +11,13 @@ public class LocalVars {
 
     private Slot[] slots;
 
+    public Slot[] getSlots() {
+        return slots;
+    }
+
+    public void setSlots(Slot[] slots) {
+        this.slots = slots;
+    }
 
     public LocalVars(int maxLocals) {
         if(maxLocals>0) {
@@ -55,7 +62,7 @@ public class LocalVars {
         int[] iArray = new int[2];
         iArray[0]= slots[index].getNum();
         iArray[1] = slots[index+1].getNum();
-        return  DataTypeConvertUtil.intToDouble(iArray);
+        return  DataTypeConvertUtil.intToDouble(iArray[0],iArray[1]);
     }
 
     /**
@@ -70,7 +77,7 @@ public class LocalVars {
         int[] iArray = new int[2];
         iArray[0]= slots[index].getNum();
         iArray[1] = slots[index+1].getNum();
-        return  DataTypeConvertUtil.intToLong(iArray);
+        return  DataTypeConvertUtil.intToLong(iArray[0],iArray[1]);
     }
 
     /**
@@ -81,5 +88,10 @@ public class LocalVars {
     }
     public SoObject getObj(int index){
         return  slots[index].getObj();
+    }
+
+    //存取Slot
+    public void setSlot(int index, Slot slot){
+        this.slots[index] = slot;
     }
 }

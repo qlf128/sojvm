@@ -56,6 +56,10 @@ public class Frame {
         localVars = new LocalVars(method.getMaxLocals());
         operandStack = new OperandStack(method.getMaxStack());
     }
+    //修改nextPC使其重新指向当前指令
+    public void revertNextPC(){
+        this.nextPC = this.thread.getPcCount();
+    }
 
     public Frame getLower() {
         return lower;

@@ -3,6 +3,7 @@ package com.jvm.soClassLoader.domain;
 import com.jvm.classReader.ClassFile;
 import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.runTimeDateArea.model.Slot;
+import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
 
 /**
@@ -37,6 +38,8 @@ public class SoClass {
     private LocalVars localVars;
 
     private LocalVars staticVars;
+    //使用一个布尔字段标识类的<clinit>方法是否已经开始执行
+    private boolean initStarted;
 
     public SoClass(ClassFile classFile){
         this.accessFlags = classFile.getAccessFlags();
@@ -80,20 +83,45 @@ public class SoClass {
         return 0!=(this.accessFlags&AccessFlagConstant.ACC_ENUM);
     }
 
+    public void startInit(){
+        this.initStarted = true;
+    }
+
     /**
      * 本类是否可以被其他类访问
      * @param otherSoClass
      * @return
      */
     public boolean isAccessibleTo(SoClass otherSoClass){
-        return this.isPublic()||(this.getPackagename()!=null&&this.getPackagename().equals(otherSoClass.getPackagename()));
+        return this.isPublic()||(this.getPackageName()!=null&&this.getPackageName().equals(otherSoClass.getPackageName()));
     }
 
-    public String getPackagename(){
-        return this.name.substring(0,this.name.lastIndexOf("/"));
+    public String getPackageName(){
+        int index = this.name.lastIndexOf("/");
+        if (index >= 0){
+            return this.name.substring(0,index);
+        }
+        return "";
     }
 
-    /**
+    public Method getMainMethod(){
+        return getStaticMethod("main","([Ljava/lang/String;)V");
+    }
+    public Method getClinitMethod(){
+        return getStaticMethod("<clinit>","()V");
+    }
+    public Method getStaticMethod(String name, String descriptor){
+        for (Method method : this.methods){
+            if (method.isStatic() && method.getName().equals(name) && method.getDescriptor().equals(descriptor)){
+                return method;
+            }
+        }
+        return null;
+    }
+    public SoObject createObject(){
+        return SoObject.createObject(this);
+    }
+    /**TODO ClassHierarchy中存在同名方法
      * soClass是否是本类的直接超类或间接超类
      * @param soClass
      * @return
@@ -218,5 +246,13 @@ public class SoClass {
 
     public void setStaticVars(LocalVars staticVars) {
         this.staticVars = staticVars;
+    }
+
+    public boolean isInitStarted() {
+        return initStarted;
+    }
+
+    public void setInitStarted(boolean initStarted) {
+        this.initStarted = initStarted;
     }
 }

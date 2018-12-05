@@ -14,4 +14,12 @@ public abstract class Index16Instruction implements Instructions{
     }
 
     public abstract void execute(Frame frame);
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 }

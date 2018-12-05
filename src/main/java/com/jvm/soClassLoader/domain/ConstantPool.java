@@ -11,6 +11,22 @@ public class ConstantPool {
 
     public Object[] constants;
 
+    public SoClass getSoClass() {
+        return soClass;
+    }
+
+    public void setSoClass(SoClass soClass) {
+        this.soClass = soClass;
+    }
+
+    public Object[] getConstants() {
+        return constants;
+    }
+
+    public void setConstants(Object[] constants) {
+        this.constants = constants;
+    }
+
     public ConstantPool(){}
 
     public ConstantPool(SoClass soClass,Object[] constants){

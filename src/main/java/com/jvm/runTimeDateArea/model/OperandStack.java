@@ -85,7 +85,7 @@ public class OperandStack {
         int[] iArray = new int[2];
         iArray[0] = slots[size].getNum();
         iArray[1] = slots[size++].getNum();
-        double d = DataTypeConvertUtil.intToDouble(iArray);
+        double d = DataTypeConvertUtil.intToDouble(iArray[0],iArray[1]);
         return d;
     }
 
@@ -103,12 +103,12 @@ public class OperandStack {
         int[] iArray = new int[2];
         iArray[0] = slots[size].getNum();
         iArray[1] = slots[size++].getNum();
-        long l = DataTypeConvertUtil.intToLong(iArray);
+        long l = DataTypeConvertUtil.intToLong(iArray[0],iArray[1]);
         return  l;
     }
 
     /**
-     * 往栈顶放入Obj
+     * 往栈顶放入Obj 与 pushRef等同
      */
     public  void pushObj(SoObject object){
         slots[size].setObj(object);
@@ -122,6 +122,10 @@ public class OperandStack {
         return obj;
     }
 
+    public  void pushRef(SoObject object){
+        slots[size].setObj(object);
+        size++;
+    }
     /**
      *  栈指令 入栈
      */
@@ -137,9 +141,15 @@ public class OperandStack {
         return slots[size];
     }
 
-    public  void pushRef(SoObject object){
-        slots[size].setObj(object);
-        size++;
+    /**
+     * 获取距离操作数栈顶n个单元格的引用变量，n=0表示栈顶元素
+     * @param n
+     * @return
+     */
+    public SoObject getRefFromTop(int n){
+        return this.slots[this.size-1-n].getObj();
     }
+
+
 
 }

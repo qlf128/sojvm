@@ -61,6 +61,8 @@ public class Stack {
         return topFrame;
     }
 
-
+    public boolean isEmpty(){
+        return topFrame == null;
+    }
 
 }
