@@ -22,8 +22,13 @@ public class GET_FIELD extends Index16Instruction {
         }
         String descriptor = field.getDescriptor();
         int slotId = field.getSoltId();
-        Slot[] slots = ref.getLocalVars().getSlots();
-        LocalVars localVars = ref.getLocalVars();
+       // Slot[] slots = ref.getLocalVars().getSlots();
+        // 新增数组之后的更改
+        Slot[] slots  = ref.fields().getSlots();
+        //LocalVars localVars = ref.getLocalVars();
+        // 新增数组之后的更改
+        LocalVars localVars  =ref.fields();
+
         switch (descriptor.charAt(0)){
             case 'Z': case 'B': case 'C': case 'S': case 'I':
                 stack.pushInt(localVars.getInt(slotId));

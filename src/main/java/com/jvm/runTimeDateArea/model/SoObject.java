@@ -12,13 +12,10 @@ import java.util.logging.SocketHandler;
 public class SoObject {
     private SoClass soClass;
 
-    private LocalVars localVars;
+
     private Object data;
 
-    public SoObject(SoClass soClass, LocalVars localVars) {
-        this.soClass = soClass;
-        this.localVars = localVars;
-    }
+
 
     public SoClass getSoClass() {
         return soClass;
@@ -32,19 +29,11 @@ public class SoObject {
         this.data = data;
     }
 
-    public LocalVars getLocalVars() {
-        return localVars;
-    }
-
-    public void setLocalVars(LocalVars localVars) {
-        this.localVars = localVars;
-    }
-
     /**
      *  得到普通对象数据
      */
-    public Slot[] getData() {
-        return (Slot[])data;
+    public LocalVars getData() {
+        return (LocalVars)data;
     }
 
     /**
@@ -71,6 +60,13 @@ public class SoObject {
         this.data = data;
     }
 
+    /**
+     *  用于普通对象数据
+     */
+    public LocalVars fields(){
+        return this.getData();
+    }
+
     public static SoObject createObject(SoClass soClass){
         LocalVars localVars = new LocalVars(soClass.getInstanceSlotCount());
         return new SoObject(soClass, localVars);
@@ -79,5 +75,21 @@ public class SoObject {
     public boolean isInstanceOf(SoClass soClass){
         return ClassHierarchy.isAssignableFrom(soClass, this.soClass);
     }
+
+
+   /*// 数组 更改Object 使其可以兼容任何类型的值
+   private LocalVars localVars;
+    public SoObject(SoClass soClass, LocalVars localVars) {
+        this.soClass = soClass;
+        this.localVars = localVars;
+    }
+    public LocalVars getLocalVars() {
+        return localVars;
+    }
+
+    public void setLocalVars(LocalVars localVars) {
+        this.localVars = localVars;
+    }*/
+
 
 }

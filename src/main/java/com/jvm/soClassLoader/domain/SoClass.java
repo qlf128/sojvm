@@ -141,6 +141,34 @@ public class SoClass {
         return false;
     }
 
+    /**
+     *  self implements iface
+     */
+    public  boolean isImplements(SoClass soClass){
+        SoClass[] interfaces = soClass.interfaces;
+        for (int i = 0; i <interfaces.length ; i++) {
+            if(interfaces[i]==soClass || interfaces[i].isSubInterfaceOf(soClass)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // self extends iface
+    public boolean isSubInterfaceOf(SoClass soClass){
+        SoClass[] interfaces = this.interfaces;
+
+        for(SoClass soClassInter:interfaces){
+            if(soClassInter==soClass || soClassInter.isSubInterfaceOf(soClass)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
     public int getAccessFlags() {
         return accessFlags;
     }
@@ -261,10 +289,30 @@ public class SoClass {
         this.initStarted = initStarted;
     }
 
+
+    public boolean isJlObject(){
+        return "java/lang/Object".equals(this.getName());
+    }
+    public boolean isJlCloneable(){
+        return "java/lang/Cloneable".equals(this.getName());
+    }
+    public boolean isJioSerializable(){
+        return "java/lang/Serializable".equals(this.getName());
+    }
+
     /**
      * 创建对象 wf new指令
      */
     public SoObject newObject(){
         return new SoObject(this);
     }
+
+    /**
+     * 数组得到class
+     */
+    public SoClass arrayClass(){
+        String arrayClassName = ClassNameHelper.getArrayClassName(this.getName());
+        return this.getSoClassLoader().loadClass(arrayClassName);
+    }
+
 }

@@ -34,7 +34,9 @@ public class PUT_FIELD extends Index16Instruction {
                 if (ref == null){
                     throw new RuntimeException("NullPointerException");
                 }
-                ref.getLocalVars().setInt(slotId, ival);
+               // ref.getLocalVars().setInt(slotId, ival);
+                // 新增数组之后的更改
+                ref.fields().setInt(slotId,ival);
                 break;
             case 'F':
                 float fval = stack.popFloat();
@@ -42,7 +44,9 @@ public class PUT_FIELD extends Index16Instruction {
                 if (ref == null){
                     throw new RuntimeException("NullPointerException");
                 }
-                ref.getLocalVars().setFloat(slotId, fval);
+               // ref.getLocalVars().setFloat(slotId, fval);
+                // 新增数组之后的更改
+                ref.fields().setFloat(slotId,fval);
                 break;
             case 'J':
                 long lval = stack.popLong();
@@ -50,7 +54,9 @@ public class PUT_FIELD extends Index16Instruction {
                 if (ref == null){
                     throw new RuntimeException("NullPointerException");
                 }
-                ref.getLocalVars().setLong(slotId, lval);
+                // ref.getLocalVars().setLong(slotId, lval);
+                // 新增数组之后的更改
+                ref.fields().setLong(slotId,lval);
                 break;
             case 'D':
                 double dval = stack.popDouble();
@@ -58,7 +64,9 @@ public class PUT_FIELD extends Index16Instruction {
                 if (ref == null){
                     throw new RuntimeException("NullPointerException");
                 }
-                ref.getLocalVars().setDouble(slotId, dval);
+                //ref.getLocalVars().setDouble(slotId, dval);
+                // 新增数组之后的更改
+                ref.fields().setDouble(slotId,dval);
                 break;
             case 'L': case '[':
                 SoObject refval = stack.popObj();
@@ -66,7 +74,9 @@ public class PUT_FIELD extends Index16Instruction {
                 if (ref == null){
                     throw new RuntimeException("NullPointerException");
                 }
-                ref.getLocalVars().setObj(slotId, refval);
+                //ref.getLocalVars().setObj(slotId, refval);
+                // 新增数组之后的更改
+                ref.fields().setObj(slotId,refval);
                 break;
                 default:
                     break;

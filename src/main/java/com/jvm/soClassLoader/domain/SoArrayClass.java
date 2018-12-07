@@ -11,7 +11,7 @@ import com.jvm.runTimeDateArea.model.SoObject;
 public class SoArrayClass extends SoClass {
 
     public boolean isArray() {
-        return "[".startsWith(getName());
+        return getName().startsWith("[");
     }
 
 
@@ -52,9 +52,17 @@ public class SoArrayClass extends SoClass {
                 double[] d = new double[count];
                 return new SoArrayObject(this,d);
             default:
-                Object[] o = new Object[count];
+                SoObject[] o = new SoObject[count];
                 return new SoArrayObject(this,o);
         }
 
     }
+
+    public SoArrayClass componentClass(){
+
+        String className = ClassNameHelper.getComponentClassName(this.getName());
+       return (SoArrayClass) this.getSoClassLoader().loadClass(className);
+
+    }
+
 }

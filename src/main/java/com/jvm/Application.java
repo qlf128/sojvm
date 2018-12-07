@@ -36,7 +36,7 @@ public class Application {
     }
 
     private static void startJVM(){
-        String path = "/Users/hedefu/Documents/WorkSpace/IDEA/sojvm/src/main/java/com/hedefu/jvmonjava/javaclasses/Test.class";
+        String path = "/Users/wangfa/IdeaProjects/sojvm/sojvm/src/main/java/com/jvm/util//Test.class";
         SoClassLoader loader = new SoClassLoader(path,true);
         //String className = "com/sojvm/Test";
         SoClass mainClass = loader.loadClass(loader.getClassFilePath());

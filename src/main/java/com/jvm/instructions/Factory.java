@@ -3,7 +3,10 @@ package com.jvm.instructions;
 import com.jvm.instructions.constants.ACONST_NULL;
 import com.jvm.instructions.constants.ICONST_M1;
 import com.jvm.instructions.constants.NOP;
+import com.jvm.instructions.loads.*;
+import com.jvm.instructions.stores.*;
 import com.jvm.interpreter.Interpret;
+import com.sun.org.apache.bcel.internal.generic.LASTORE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,21 +108,21 @@ public class Factory {
             case 0x2d:
                 return new ALOAD_3();
             case 0x2e:
-                return new IALOAD();
+                return new XIALOAD();
             case 0x2f:
-                return new LALOAD();
+                return new XLALOAD();
             case 0x30:
-                return new FALOAD();
+                return new XFALOAD();
             case 0x31:
-                return new DALOAD();
+                return new XDALOAD();
             case 0x32:
-                return new AALOAD();
+                return new XAALOAD();
             case 0x33:
-                return new BALOAD();
+                return new XBALOAD();
             case 0x34:
-                return new CALOAD();
+                return new XCALOAD();
             case 0x35:
-                return new SALOAD();
+                return new XSALOAD();
             case 0x36:
                 return new ISTORE();
             case 0x37:
@@ -171,21 +174,21 @@ public class Factory {
             case 0x4e:
                 return new ASTORE_3();
             case 0x4f:
-                return new IASTORE();
+                return new XIASTORE();
             case 0x50:
-                return new LASTORE();
+                return new XLASTORE();
             case 0x51:
-                return new FASTORE();
+                return new XFASTORE();
             case 0x52:
-                return new DASTORE();
+                return new XDASTORE();
             case 0x53:
-                return new AASTORE();
+                return new XAASTORE();
             case 0x54:
-                return new BASTORE();
+                return new XBASTORE();
             case 0x55:
-                return new CASTORE();
+                return new XCASTORE();
             case 0x56:
-                return new SASTORE();
+                return new XSASTORE();
             case 0x57:
                 return new POP();
             case 0x58:

@@ -11,12 +11,45 @@ public class ClassHierarchy {
         if (self == other){
             return true;
         }
-        //调用类是接口
+// 添加数组之后的版本
+        if(!((SoArrayClass)self).isArray()){
+           if(!self.isInterface()){
+                // self is class
+               if(!other.isInterface()){
+                   // other is not interface
+                   return self.isSubClassOf(other);
+               }else {
+                   // other is interface
+                   return self.isImplements(other);
+               }
+           }
+        }else{
+            // self is array
+            if(!((SoArrayClass)other).isArray()){
+                if(other.isInterface()){
+                    // other is class
+                    return other.isJlObject();
+                }else {
+                    // other is interface
+                    return other.isJlCloneable() || other.isJioSerializable();
+                }
+            }else{
+                // other is array
+                SoArrayClass selfc =  ((SoArrayClass) self).componentClass();
+                SoArrayClass otherc = ((SoArrayClass) other).componentClass();
+
+                return  selfc == otherc || ClassHierarchy.isAssignableFrom(otherc,selfc);
+            }
+
+        }
+
+        return false;
+        /*//调用类是接口 添加数组之前的版本
         if (! self.isInterface()){
             return isSubClassOf(self,other);
         } else {
             return isImplements(self,other);
-        }
+        }*/
     }
 
     public static boolean isSubClassOf(SoClass self, SoClass other){

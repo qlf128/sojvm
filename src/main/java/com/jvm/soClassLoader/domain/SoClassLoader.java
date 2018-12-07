@@ -38,7 +38,7 @@ public class SoClassLoader {
         if(soClassMap!=null&&soClassMap.containsKey(name)){
             return soClassMap.get(name);
         }
-        // 添加Array
+        // 添加加载Array
         if(name.startsWith("[")){
             return this.loadArrayClass(name);
         }
@@ -273,7 +273,7 @@ public class SoClassLoader {
 
 
     /**
-     *  新增 加载 数组对象 wf
+     *  新增加载数组对象
      */
     public SoClass loadArrayClass(String name){
 
@@ -281,7 +281,7 @@ public class SoClassLoader {
         soClass.setAccessFlags(AccessFlagConstant.ACC_PUBLIC);
         soClass.setName(name);
         soClass.setSoClassLoader(this);
-        //todo 设置initStarted
+        soClass.setInitStarted(true);
         soClass.setSuperClass(this.loadClass("java/lang/Object"));
         SoClass[] interfaces = new SoClass[2];
         interfaces[0] = this.loadClass("java/lang/Cloneable");
