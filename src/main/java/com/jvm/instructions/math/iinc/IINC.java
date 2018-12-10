@@ -1,4 +1,4 @@
-package com.jvm.instructions.math;
+package com.jvm.instructions.math.iinc;
 
 import com.jvm.instructions.BytecodeReader;
 import com.jvm.instructions.Instructions;

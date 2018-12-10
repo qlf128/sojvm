@@ -3,9 +3,9 @@ package com.jvm.instructions.loads;
 import com.jvm.instructions.Index8Instruction;
 import com.jvm.runTimeDateArea.model.Frame;
 
-public class DLOAD extends Index8Instruction{
+public class LLOAD_3 extends Index8Instruction{
 
     public void execute(Frame frame){
-        DloadUtil.lload(frame, this.getIndex());
+        LloadUtil.lload(frame, 3);
     }
 }

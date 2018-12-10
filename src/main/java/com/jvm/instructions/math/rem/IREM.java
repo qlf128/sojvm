@@ -1,4 +1,4 @@
-package com.jvm.instructions.math;
+package com.jvm.instructions.math.rem;
 
 import com.jvm.instructions.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
