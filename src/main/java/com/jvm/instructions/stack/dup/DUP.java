@@ -1,4 +1,4 @@
-package com.jvm.instructions.stack;
+package com.jvm.instructions.stack.dup;
 
 import com.jvm.instructions.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
