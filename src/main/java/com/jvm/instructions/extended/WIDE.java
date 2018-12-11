@@ -29,7 +29,7 @@ public class WIDE implements Instructions{
     public void fetchOperands(BytecodeReader byteCodeReader){
         int opcode = byteCodeReader.readUint8();
         byte[] opcodeArray = DataTypeConvertUtil.intToByte(opcode);
-        byte opcodeLow8Bit = opcodeArray[0];
+        int opcodeLow8Bit = opcodeArray[0];
 
         Index8Instruction instructions;
         switch (opcodeLow8Bit) {
