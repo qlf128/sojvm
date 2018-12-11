@@ -1,4 +1,4 @@
-package com.jvm.instructions.control;
+package com.jvm.instructions.control.returns;
 
 import com.jvm.instructions.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;

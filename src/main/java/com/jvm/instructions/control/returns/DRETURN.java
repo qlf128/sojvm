@@ -1,16 +1,17 @@
-package com.jvm.instructions.control;
+package com.jvm.instructions.control.returns;
 
 import com.jvm.instructions.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
+import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.runTimeDateArea.model.SoThread;
-
-public class FRETURN extends NoOperandsInstruction {
+//从方法中返回double
+public class DRETURN extends NoOperandsInstruction {
     @Override
     public void execute(Frame frame) {
         SoThread thread = frame.getThread();
         Frame currentFrame = thread.popFrame();
         Frame invokerFrame = thread.getCurrentFrame();
-        float value = currentFrame.getOperandStack().popFloat();
-        invokerFrame.getOperandStack().pushFloat(value);
+        double value = currentFrame.getOperandStack().popDouble();
+        invokerFrame.getOperandStack().pushDouble(value);
     }
 }
