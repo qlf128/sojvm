@@ -1,20 +1,14 @@
-package com.jvm.instructions.comparisons;
+package com.jvm.instructions.comparisons.dcmp;
 
-import com.jvm.instructions.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.OperandStack;
 
-public class FCMPL extends NoOperandsInstruction{
-
-    public void execute(Frame frame){
-        fcmp(frame, false);
-    }
-
-    private void fcmp(Frame frame, boolean gFlag){
+public class DCMP {
+    public static void dcmp(Frame frame, boolean gFlag){
         OperandStack stack = frame.getOperandStack();
 
-        float v2 = stack.popFloat();
-        float v1 = stack.popFloat();
+        double v2 = stack.popDouble();
+        double v1 = stack.popDouble();
 
         if(v1 > v2){
             stack.pushInt(1);

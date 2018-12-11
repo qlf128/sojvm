@@ -1,4 +1,4 @@
-package com.jvm.instructions.comparisons;
+package com.jvm.instructions.comparisons.ifcond;
 
 import com.jvm.instructions.BranchInstruction;
 import com.jvm.instructions.base.Base;

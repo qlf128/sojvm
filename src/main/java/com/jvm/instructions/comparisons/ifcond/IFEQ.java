@@ -1,4 +1,4 @@
-package com.jvm.instructions.comparisons;
+package com.jvm.instructions.comparisons.ifcond;
 
 import com.jvm.instructions.BranchInstruction;
 import com.jvm.instructions.base.Base;
@@ -13,11 +13,12 @@ import com.jvm.runTimeDateArea.model.Frame;
  ·ifle:x<=0
  ·ifgt:x>0
  ·ifge:x>=0
+ *
  */
-public class IFNE extends BranchInstruction {
+public class IFEQ extends BranchInstruction{
     public void execute(Frame frame){
         int val = frame.getOperandStack().popInt();
-        if(val != 0){
+        if(val == 0){
             Base.branch(frame, this.getOffset());
         }
     }

@@ -1,17 +1,17 @@
-package com.jvm.instructions.conversions;
+package com.jvm.instructions.conversions.i2x;
 
 import com.jvm.instructions.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.OperandStack;
 
 /**
- * double强制转换成int
+ * convert int to short
  */
-public class D2I extends NoOperandsInstruction{
+public class I2S extends NoOperandsInstruction{
     public void execute(Frame frame){
         OperandStack stack = frame.getOperandStack();
-        double d = stack.popDouble();
-        int i = (int)d;
-        stack.pushInt(i);
+        int i = stack.popInt();
+        short s = (short)i;
+        stack.pushInt(s);
     }
 }

@@ -1,4 +1,4 @@
-package com.jvm.instructions.comparisons;
+package com.jvm.instructions.comparisons.lcmp;
 
 import com.jvm.instructions.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
