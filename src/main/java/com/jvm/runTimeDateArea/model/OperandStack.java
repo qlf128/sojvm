@@ -151,5 +151,16 @@ public class OperandStack {
     }
 
 
+    /**
+     *  清空
+     */
+    public  void clear(){
+        this.size =0;
+        for (int i = 0; i < this.slots.length; i++) {
+            this.slots[i].setObj(null);
+        }
+    }
+
+
 
 }
