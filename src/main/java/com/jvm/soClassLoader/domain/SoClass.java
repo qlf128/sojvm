@@ -5,6 +5,7 @@ import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.runTimeDateArea.model.Slot;
 import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author luao
@@ -166,7 +167,19 @@ public class SoClass {
         return false;
     }
 
-
+    public Field getField(String name, String descriptor, boolean isStatic){
+        for(SoClass c = this; c != null; c = c.superClass){
+            for(int i=0;i<c.fields.length;i++){
+                Field field = fields[i];
+                if(field.isStatic() == isStatic &&
+                        field.getName().equals(name) &&
+                        field.getDescriptor().equals(descriptor)){
+                    return field;
+                }
+            }
+        }
+        return null;
+    }
 
 
     public int getAccessFlags() {
@@ -313,6 +326,10 @@ public class SoClass {
     public SoClass arrayClass(){
         String arrayClassName = ClassNameHelper.getArrayClassName(this.getName());
         return this.getSoClassLoader().loadClass(arrayClassName);
+    }
+
+    public String javaName(){
+        return StringUtils.replace(name,"/",".",-1);
     }
 
 }

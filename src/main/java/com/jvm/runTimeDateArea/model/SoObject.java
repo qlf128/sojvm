@@ -1,6 +1,7 @@
 package com.jvm.runTimeDateArea.model;
 
 import com.jvm.soClassLoader.domain.ClassHierarchy;
+import com.jvm.soClassLoader.domain.Field;
 import com.jvm.soClassLoader.domain.SoClass;
 
 import java.util.logging.SocketHandler;
@@ -15,7 +16,7 @@ public class SoObject {
 
     private Object data;
 
-
+    private Object extra;
 
     public SoClass getSoClass() {
         return soClass;
@@ -76,8 +77,21 @@ public class SoObject {
         return ClassHierarchy.isAssignableFrom(soClass, this.soClass);
     }
 
+    public SoObject getRefVar(String name, String descriptor){
+        Field field = this.getSoClass().getField(name, descriptor, false);
+        Slot[] slots = this.getData().getSlots();
+        return slots[field.getSoltId()].getObj();
+    }
 
-   /*// 数组 更改Object 使其可以兼容任何类型的值
+    public Object getExtra() {
+        return extra;
+    }
+
+    public void setExtra(Object extra) {
+        this.extra = extra;
+    }
+
+    /*// 数组 更改Object 使其可以兼容任何类型的值
    private LocalVars localVars;
     public SoObject(SoClass soClass, LocalVars localVars) {
         this.soClass = soClass;

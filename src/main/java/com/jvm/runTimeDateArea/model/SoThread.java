@@ -74,4 +74,8 @@ public class SoThread {
     public void setStack(Stack stack) {
         this.stack = stack;
     }
+
+    public void clearStack(){
+        this.stack.clear();
+    }
 }
