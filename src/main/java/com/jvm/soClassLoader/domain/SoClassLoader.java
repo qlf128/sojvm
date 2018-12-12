@@ -2,6 +2,8 @@ package com.jvm.soClassLoader.domain;
 
 import com.jvm.classReader.ClassFile;
 import com.jvm.runTimeDateArea.model.LocalVars;
+import com.jvm.runTimeDateArea.model.SoObject;
+import com.jvm.runTimeDateArea.model.StringPool;
 import com.jvm.search.ReadClass;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
 import com.jvm.soClassLoader.util.FileUtil;
@@ -247,7 +249,9 @@ public class SoClassLoader {
                     vars.setDouble(slotId, (double)constant);
                     break;
                 case "Ljava/lang/String;":
-                    vars.setDouble(slotId, (double)constant);
+                    String str =  (String) cp.getConstant(cpIndex);
+                    SoObject soStr = StringPool.jString(soClass.getSoClassLoader(), str);
+                    vars.setObj(slotId,soStr);
                     break;
                 default:
                     break;

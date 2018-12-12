@@ -94,4 +94,13 @@ public class LocalVars {
     public void setSlot(int index, Slot slot){
         this.slots[index] = slot;
     }
+
+    // 得到当前Obj
+    public SoObject getThis(){
+        return this.getObj(0);
+    }
+    // 得到当前boolean
+    public boolean getBoolean(int index){
+        return this.getInt(index)==1;
+    }
 }

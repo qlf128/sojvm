@@ -1,6 +1,7 @@
 package com.jvm.runTimeDateArea.model;
 
 import com.jvm.soClassLoader.domain.ClassHierarchy;
+import com.jvm.soClassLoader.domain.Field;
 import com.jvm.soClassLoader.domain.SoClass;
 
 import java.util.logging.SocketHandler;
@@ -15,7 +16,16 @@ public class SoObject {
 
     private Object data;
 
+    private Object extra;
 
+
+    public Object getExtra() {
+        return extra;
+    }
+
+    public void setExtra(Object extra) {
+        this.extra = extra;
+    }
 
     public SoClass getSoClass() {
         return soClass;
@@ -43,6 +53,10 @@ public class SoObject {
         return  data;
     }
 
+    public Object getStrData() {
+        return data;
+    }
+
     public SoObject() {
     }
 
@@ -60,6 +74,12 @@ public class SoObject {
         this.data = data;
     }
 
+    public SoObject(SoClass soClass, Object data, Object extra) {
+        this.soClass = soClass;
+        this.data = data;
+        this.extra = extra;
+    }
+
     /**
      *  用于普通对象数据
      */
@@ -75,6 +95,20 @@ public class SoObject {
     public boolean isInstanceOf(SoClass soClass){
         return ClassHierarchy.isAssignableFrom(soClass, this.soClass);
     }
+
+
+    public void setRefVar(String name,String descriptor, SoObject soObject){
+        Field field = this.soClass.getField(name, descriptor, false);
+        LocalVars  slots = this.getData();
+        slots.setObj(field.getSoltId(),soObject);
+    }
+    public SoObject getRefVar(String name,String descriptor){
+        Field field = this.soClass.getField(name,descriptor,false);
+        LocalVars  slots = this.getData();
+        return  slots.getObj(field.getSoltId());
+    }
+
+
 
 
    /*// 数组 更改Object 使其可以兼容任何类型的值

@@ -45,6 +45,9 @@ public class SoThread {
     public Frame getCurrentFrame(){
         return  stack.top();
     }
+    public Frame getTopFrame(){
+        return  stack.top();
+    }
 
     public boolean isStackEmpty(){
         return this.stack.isEmpty();
@@ -73,5 +76,20 @@ public class SoThread {
 
     public void setStack(Stack stack) {
         this.stack = stack;
+    }
+
+    /**
+     *  得到frames
+     */
+    public Frame[] getFrames(){
+        return this.stack.getFrames();
+    }
+
+    public void clearStack(){
+        this.stack.clear();
+    }
+
+    public Frame newFrames(Method method){
+        return  new Frame(this,method);
     }
 }

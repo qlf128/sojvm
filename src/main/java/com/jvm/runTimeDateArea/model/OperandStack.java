@@ -161,6 +161,18 @@ public class OperandStack {
         }
     }
 
-
+    /**
+     *  往栈顶放入boolean
+     */
+    public void pushBoolean(boolean value){
+        if(value){
+            this.pushInt(1);
+        }else {
+            this.pushInt(0);
+        }
+    }
+    public boolean popBoolean(){
+        return popInt()==1;
+    }
 
 }

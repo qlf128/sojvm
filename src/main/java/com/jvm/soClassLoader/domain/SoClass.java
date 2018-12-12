@@ -315,4 +315,17 @@ public class SoClass {
         return this.getSoClassLoader().loadClass(arrayClassName);
     }
 
+    public Field getField(String name,String desc ,boolean isStatic){
+        for(SoClass c = this;c!=null;c=c.superClass){
+            for(int i=0;i<c.fields.length;i++){
+                if(fields[i].isStatic() == isStatic &&
+                        name.equals(fields[i].getName()) &&
+                        desc.equals(fields[i].getDescriptor())){
+                    return fields[i];
+                }
+            }
+        }
+        return null;
+    }
+
 }
