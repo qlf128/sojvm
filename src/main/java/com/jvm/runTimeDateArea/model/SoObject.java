@@ -18,15 +18,6 @@ public class SoObject {
 
     private Object extra;
 
-
-    public Object getExtra() {
-        return extra;
-    }
-
-    public void setExtra(Object extra) {
-        this.extra = extra;
-    }
-
     public SoClass getSoClass() {
         return soClass;
     }
@@ -96,16 +87,24 @@ public class SoObject {
         return ClassHierarchy.isAssignableFrom(soClass, this.soClass);
     }
 
+    public SoObject getRefVar(String name, String descriptor){
+        Field field = this.getSoClass().getField(name, descriptor, false);
+        Slot[] slots = this.getData().getSlots();
+        return slots[field.getSoltId()].getObj();
+    }
+
+    public Object getExtra() {
+        return extra;
+    }
+
+    public void setExtra(Object extra) {
+        this.extra = extra;
+    }
 
     public void setRefVar(String name,String descriptor, SoObject soObject){
         Field field = this.soClass.getField(name, descriptor, false);
         LocalVars  slots = this.getData();
         slots.setObj(field.getSoltId(),soObject);
-    }
-    public SoObject getRefVar(String name,String descriptor){
-        Field field = this.soClass.getField(name,descriptor,false);
-        LocalVars  slots = this.getData();
-        return  slots.getObj(field.getSoltId());
     }
 
 

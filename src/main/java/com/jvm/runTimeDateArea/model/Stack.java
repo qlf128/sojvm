@@ -76,11 +76,10 @@ public class Stack {
         return topFrame == null;
     }
 
-    // 清空
-    public  void clear(){
-        while (!isEmpty()){
-            this.pop();
+    public Stack clear(){
+        while(!isEmpty()){
+            pop();
         }
+        return this;
     }
-
 }

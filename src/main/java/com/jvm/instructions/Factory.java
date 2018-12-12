@@ -1,25 +1,96 @@
 package com.jvm.instructions;
 
-import com.jvm.instructions.constants.consta.ACONST_NULL;
-import com.jvm.instructions.constants.consta.ICONST_M1;
+import com.jvm.instructions.comparisons.dcmp.DCMPG;
+import com.jvm.instructions.comparisons.dcmp.DCMPL;
+import com.jvm.instructions.comparisons.fcmp.FCMPG;
+import com.jvm.instructions.comparisons.fcmp.FCMPL;
+import com.jvm.instructions.comparisons.if_acmp.IF_ACMPEQ;
+import com.jvm.instructions.comparisons.if_acmp.IF_ACMPNE;
+import com.jvm.instructions.comparisons.if_icmp.*;
+import com.jvm.instructions.comparisons.ifcond.*;
+import com.jvm.instructions.comparisons.lcmp.LCMP;
+import com.jvm.instructions.constants.consta.*;
+import com.jvm.instructions.constants.ipush.BIPUSH;
+import com.jvm.instructions.constants.ipush.SIPUSH;
+import com.jvm.instructions.constants.ldc.LDC;
+import com.jvm.instructions.constants.ldc.LDC2_W;
+import com.jvm.instructions.constants.ldc.LDC_W;
 import com.jvm.instructions.constants.nop.NOP;
+import com.jvm.instructions.control.GOTO;
+import com.jvm.instructions.control.LOOKUP_SWITCH;
+import com.jvm.instructions.control.TABLE_SWITCH;
+import com.jvm.instructions.control.returns.*;
+import com.jvm.instructions.conversions.d2x.D2F;
+import com.jvm.instructions.conversions.d2x.D2I;
+import com.jvm.instructions.conversions.d2x.D2L;
+import com.jvm.instructions.conversions.f2x.F2D;
+import com.jvm.instructions.conversions.f2x.F2I;
+import com.jvm.instructions.conversions.f2x.F2L;
+import com.jvm.instructions.conversions.i2x.*;
+import com.jvm.instructions.conversions.l2x.L2D;
+import com.jvm.instructions.conversions.l2x.L2F;
+import com.jvm.instructions.conversions.l2x.L2I;
+import com.jvm.instructions.extended.GOTO_W;
+import com.jvm.instructions.extended.IFNONNULL;
+import com.jvm.instructions.extended.IFNULL;
+import com.jvm.instructions.extended.WIDE;
 import com.jvm.instructions.loads.aload.*;
 import com.jvm.instructions.loads.dload.*;
 import com.jvm.instructions.loads.fload.*;
 import com.jvm.instructions.loads.iload.*;
 import com.jvm.instructions.loads.lload.*;
 import com.jvm.instructions.loads.xaload.*;
+import com.jvm.instructions.math.add.DADD;
+import com.jvm.instructions.math.add.FADD;
+import com.jvm.instructions.math.add.IADD;
+import com.jvm.instructions.math.add.LADD;
+import com.jvm.instructions.math.and.IAND;
+import com.jvm.instructions.math.and.LAND;
+import com.jvm.instructions.math.div.DDIV;
+import com.jvm.instructions.math.div.FDIV;
+import com.jvm.instructions.math.div.IDIV;
+import com.jvm.instructions.math.div.LDIV;
+import com.jvm.instructions.math.iinc.IINC;
+import com.jvm.instructions.math.mul.DMUL;
+import com.jvm.instructions.math.mul.FMUL;
+import com.jvm.instructions.math.mul.IMUL;
+import com.jvm.instructions.math.mul.LMUL;
+import com.jvm.instructions.math.neg.DNEG;
+import com.jvm.instructions.math.neg.FNEG;
+import com.jvm.instructions.math.neg.INEG;
+import com.jvm.instructions.math.neg.LNEG;
+import com.jvm.instructions.math.or.IOR;
+import com.jvm.instructions.math.or.LOR;
+import com.jvm.instructions.math.rem.DREM;
+import com.jvm.instructions.math.rem.FREM;
+import com.jvm.instructions.math.rem.IREM;
+import com.jvm.instructions.math.rem.LREM;
+import com.jvm.instructions.math.sh.*;
+import com.jvm.instructions.math.sub.DSUB;
+import com.jvm.instructions.math.sub.FSUB;
+import com.jvm.instructions.math.sub.ISUB;
+import com.jvm.instructions.math.sub.LSUB;
+import com.jvm.instructions.math.xor.IXOR;
+import com.jvm.instructions.math.xor.LXOR;
+import com.jvm.instructions.references.*;
+import com.jvm.instructions.references.monitor.MONITOR_ENTER;
+import com.jvm.instructions.references.monitor.MONITOR_EXIT;
+import com.jvm.instructions.reserved.INVOKE_NATIVE;
+import com.jvm.instructions.stack.dup.*;
+import com.jvm.instructions.stack.pop.POP;
+import com.jvm.instructions.stack.pop.POP2;
+import com.jvm.instructions.stack.swap.SWAP;
 import com.jvm.instructions.stores.astore.*;
 import com.jvm.instructions.stores.dstore.*;
 import com.jvm.instructions.stores.fstore.*;
-import com.jvm.instructions.stores.istore.ISTORE;
-import com.jvm.instructions.stores.istore.ISTORE_0;
-import com.jvm.instructions.stores.istore.ISTORE_1;
-import com.jvm.instructions.stores.istore.ISTORE_3;
+import com.jvm.instructions.stores.istore.*;
 import com.jvm.instructions.stores.lstore.*;
 import com.jvm.instructions.stores.xastore.*;
+import com.jvm.util.NativeMethodUtil;
+import com.sun.org.apache.bcel.internal.generic.MONITOREXIT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class Factory {
     private final Logger log = LoggerFactory.getLogger(Factory.class);
@@ -37,27 +108,27 @@ public class Factory {
             case 0x04:
                 return new ICONST_1();
             case 0x05:
-                return ICONST_2();
+                return new ICONST_2();
             case 0x06:
-                return ICONST_3();
+                return new ICONST_3();
             case 0x07:
-                return ICONST_4();
+                return new ICONST_4();
             case 0x08:
-                return ICONST_5();
+                return new ICONST_5();
             case 0x09:
-                return LCONST_0();
+                return new LCONST_0();
             case 0x0a:
-                return LCONST_1();
+                return new LCONST_1();
             case 0x0b:
-                return FCONST_0();
+                return new FCONST_0();
             case 0x0c:
-                return FCONST_1();
+                return new FCONST_1();
             case 0x0d:
-                return FCONST_2();
+                return new FCONST_2();
             case 0x0e:
-                return DCONST_0();
+                return new DCONST_0();
             case 0x0f:
-                return DCONST_1();
+                return new DCONST_1();
             case 0x10:
                 return new BIPUSH();
             case 0x11:
@@ -149,7 +220,7 @@ public class Factory {
             case 0x3c:
                 return new ISTORE_1();
             case 0x3d:
-                return new ISTROE_2();
+                return new ISTORE_2();
             case 0x3e:
                 return new ISTORE_3();
             case 0x3f:
@@ -381,7 +452,7 @@ public class Factory {
             case 0xb0:
                 return new ARETURN();
             case 0xb1:
-                return new _return();
+                return new RETURN();
             case 0xb2:
                 return new GET_STATIC();
             case 0xb3:
@@ -407,7 +478,7 @@ public class Factory {
             case 0xbd:
                 return new ANEW_ARRAY();
             case 0xbe:
-                return new ARRANLENGTH();
+                return new ARRAY_LENGTH();
             case 0xbf:
                 return new ATHROW();
             case 0xc0:
@@ -415,9 +486,9 @@ public class Factory {
             case 0xc1:
                 return new INSTANCE_OF();
             case 0xc2:
-                return new MONITORENTER();
+                return new MONITOR_ENTER();
             case 0xc3:
-                return new MONITOREXIT();
+                return new MONITOR_EXIT();
             case 0xc4:
                 return new WIDE();
             case 0xc5:
@@ -435,8 +506,8 @@ public class Factory {
                 return new INVOKE_NATIVE();
             // case 0xff: IMPDEP2();
             default:
-                log.error("Unsupported opcode: 0x{}",opcode);
-                panic();
+                //log.error("Unsupported opcode: 0x{}",opcode);
+                NativeMethodUtil.panic("Unsupported opcode: 0x"+opcode);
         }
 
         return null;

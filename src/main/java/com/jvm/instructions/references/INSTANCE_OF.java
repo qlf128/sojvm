@@ -8,7 +8,7 @@ import com.jvm.soClassLoader.domain.ClassRef;
 import com.jvm.soClassLoader.domain.ConstantPool;
 import com.jvm.soClassLoader.domain.SoClass;
 
-public class INSTANCEOF extends Index16Instruction {
+public class INSTANCE_OF extends Index16Instruction {
     @Override
     public void execute(Frame frame) {
         OperandStack stack = frame.getOperandStack();
