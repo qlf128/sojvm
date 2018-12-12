@@ -73,6 +73,9 @@ import com.jvm.instructions.math.sub.LSUB;
 import com.jvm.instructions.math.xor.IXOR;
 import com.jvm.instructions.math.xor.LXOR;
 import com.jvm.instructions.references.*;
+import com.jvm.instructions.references.monitor.MONITOR_ENTER;
+import com.jvm.instructions.references.monitor.MONITOR_EXIT;
+import com.jvm.instructions.reserved.INVOKE_NATIVE;
 import com.jvm.instructions.stack.dup.*;
 import com.jvm.instructions.stack.pop.POP;
 import com.jvm.instructions.stack.pop.POP2;
@@ -475,7 +478,7 @@ public class Factory {
             case 0xbd:
                 return new ANEW_ARRAY();
             case 0xbe:
-                return new ARRANLENGTH();
+                return new ARRAY_LENGTH();
             case 0xbf:
                 return new ATHROW();
             case 0xc0:
@@ -483,9 +486,9 @@ public class Factory {
             case 0xc1:
                 return new INSTANCE_OF();
             case 0xc2:
-                return new MONITORENTER();
+                return new MONITOR_ENTER();
             case 0xc3:
-                return new MONITOREXIT();
+                return new MONITOR_EXIT();
             case 0xc4:
                 return new WIDE();
             case 0xc5:
