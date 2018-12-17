@@ -5,6 +5,7 @@ import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.runTimeDateArea.model.Slot;
 import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
+import sun.reflect.CallerSensitive;
 
 /**
  * @author luao
@@ -231,4 +232,8 @@ public class SoClass {
     public SoObject newObject(){
         return new SoObject(this);
     }
+
+    @CallerSensitive
+    public static native SoClass getCallerClass();
+
 }

@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public class SoClassLoader {
 
+
     private ReadClass readClass;
 
     private Map<String,SoClass> soClassMap = new HashMap<>();;
@@ -289,4 +290,22 @@ public class SoClassLoader {
         this.setSoClassMap(map);
         return soClass;
     }
+    /**
+     * Description 注册本地方法
+     * @Author wangshasha
+     * @Date 2018/12/4 上午10:23
+     */
+    public static native void registerNatives();
+    static {
+        registerNatives();
+    }
+
+    public String findLibrary(String libname) {
+        return null;
+    }
+
+
+
 }
+
+
