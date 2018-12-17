@@ -11,6 +11,13 @@ public class LocalVars {
 
     private Slot[] slots;
 
+    public Slot[] getSlots() {
+        return slots;
+    }
+
+    public void setSlots(Slot[] slots) {
+        this.slots = slots;
+    }
 
     public LocalVars(int maxLocals) {
         if(maxLocals>0) {
@@ -81,5 +88,19 @@ public class LocalVars {
     }
     public SoObject getObj(int index){
         return  slots[index].getObj();
+    }
+
+    //存取Slot
+    public void setSlot(int index, Slot slot){
+        this.slots[index] = slot;
+    }
+
+    // 得到当前Obj
+    public SoObject getThis(){
+        return this.getObj(0);
+    }
+    // 得到当前boolean
+    public boolean getBoolean(int index){
+        return this.getInt(index)==1;
     }
 }

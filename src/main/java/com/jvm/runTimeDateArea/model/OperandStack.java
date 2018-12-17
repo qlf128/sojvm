@@ -108,7 +108,7 @@ public class OperandStack {
     }
 
     /**
-     * 往栈顶放入Obj
+     * 往栈顶放入Obj 与 pushRef等同
      */
     public  void pushObj(SoObject object){
         slots[size].setObj(object);
@@ -122,6 +122,10 @@ public class OperandStack {
         return obj;
     }
 
+    public  void pushRef(SoObject object){
+        slots[size].setObj(object);
+        size++;
+    }
     /**
      *  栈指令 入栈
      */
@@ -137,9 +141,38 @@ public class OperandStack {
         return slots[size];
     }
 
-    public  void pushRef(SoObject object){
-        slots[size].setObj(object);
-        size++;
+    /**
+     * 获取距离操作数栈顶n个单元格的引用变量，n=0表示栈顶元素
+     * @param n
+     * @return
+     */
+    public SoObject getRefFromTop(int n){
+        return this.slots[this.size-1-n].getObj();
+    }
+
+
+    /**
+     *  清空
+     */
+    public  void clear(){
+        this.size =0;
+        for (int i = 0; i < this.slots.length; i++) {
+            this.slots[i].setObj(null);
+        }
+    }
+
+    /**
+     *  往栈顶放入boolean
+     */
+    public void pushBoolean(boolean value){
+        if(value){
+            this.pushInt(1);
+        }else {
+            this.pushInt(0);
+        }
+    }
+    public boolean popBoolean(){
+        return popInt()==1;
     }
 
 }

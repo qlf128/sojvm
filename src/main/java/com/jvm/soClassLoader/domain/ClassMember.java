@@ -40,10 +40,10 @@ public class ClassMember {
         }
         SoClass c = this.soClass;
         if(this.isProtected()){
-           return  d==c || d.isSubClassOf(c) || c.getPackagename() == d.getPackagename();
+           return  d==c || d.isSubClassOf(c) || c.getPackageName() == d.getPackageName();
         }
         if(!this.isPrivate()){
-            return c.getPackagename() == d.getPackagename();
+            return c.getPackageName() == d.getPackageName();
         }
         return c == d;
     }

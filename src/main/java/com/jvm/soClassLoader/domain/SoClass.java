@@ -5,6 +5,7 @@ import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.runTimeDateArea.model.Slot;
 import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
+import org.apache.commons.lang3.StringUtils;
 import sun.reflect.CallerSensitive;
 
 /**
@@ -39,6 +40,8 @@ public class SoClass {
     private LocalVars localVars;
 
     private LocalVars staticVars;
+    //使用一个布尔字段标识类的<clinit>方法是否已经开始执行
+    private boolean initStarted;
 
     public SoClass(){
 
@@ -49,7 +52,8 @@ public class SoClass {
         this.name = classFile.getClassName();
         this.superClassName = classFile.getSuperClassName();
         this.interfaceNames = classFile.getInterfaceNames();
-        this.constantPool = constantPool.newConstantPool(this, classFile.getConstantPool());
+        com.jvm.classReader.ConstantPool cp = classFile.getConstantPool();
+        this.constantPool = com.jvm.soClassLoader.domain.ConstantPool.newConstantPool(this, cp);
         this.fields = Field.newFields(this, classFile.getFields());
         this.methods = Method.newMethods(this,classFile.getMethods());
     }
@@ -86,20 +90,45 @@ public class SoClass {
         return 0!=(this.accessFlags&AccessFlagConstant.ACC_ENUM);
     }
 
+    public void startInit(){
+        this.initStarted = true;
+    }
+
     /**
      * 本类是否可以被其他类访问
      * @param otherSoClass
      * @return
      */
     public boolean isAccessibleTo(SoClass otherSoClass){
-        return this.isPublic()||(this.getPackagename()!=null&&this.getPackagename().equals(otherSoClass.getPackagename()));
+        return this.isPublic()||(this.getPackageName()!=null&&this.getPackageName().equals(otherSoClass.getPackageName()));
     }
 
-    public String getPackagename(){
-        return this.name.substring(0,this.name.lastIndexOf("/"));
+    public String getPackageName(){
+        int index = this.name.lastIndexOf("/");
+        if (index >= 0){
+            return this.name.substring(0,index);
+        }
+        return "";
     }
 
-    /**
+    public Method getMainMethod(){
+        return getStaticMethod("main","([Ljava/lang/String;)V");
+    }
+    public Method getClinitMethod(){
+        return getStaticMethod("<clinit>","()V");
+    }
+    public Method getStaticMethod(String name, String descriptor){
+        for (Method method : this.methods){
+            if (method.isStatic() && method.getName().equals(name) && method.getDescriptor().equals(descriptor)){
+                return method;
+            }
+        }
+        return null;
+    }
+    public SoObject createObject(){
+        return SoObject.createObject(this);
+    }
+    /**TODO ClassHierarchy中存在同名方法
      * soClass是否是本类的直接超类或间接超类
      * @param soClass
      * @return
@@ -113,6 +142,46 @@ public class SoClass {
         }
         return false;
     }
+
+    /**
+     *  self implements iface
+     */
+    public  boolean isImplements(SoClass soClass){
+        SoClass[] interfaces = soClass.interfaces;
+        for (int i = 0; i <interfaces.length ; i++) {
+            if(interfaces[i]==soClass || interfaces[i].isSubInterfaceOf(soClass)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // self extends iface
+    public boolean isSubInterfaceOf(SoClass soClass){
+        SoClass[] interfaces = this.interfaces;
+
+        for(SoClass soClassInter:interfaces){
+            if(soClassInter==soClass || soClassInter.isSubInterfaceOf(soClass)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Field getField(String name, String descriptor, boolean isStatic){
+        for(SoClass c = this; c != null; c = c.superClass){
+            for(int i=0;i<c.fields.length;i++){
+                Field field = fields[i];
+                if(field.isStatic() == isStatic &&
+                        field.getName().equals(name) &&
+                        field.getDescriptor().equals(descriptor)){
+                    return field;
+                }
+            }
+        }
+        return null;
+    }
+
 
     public int getAccessFlags() {
         return accessFlags;
@@ -226,6 +295,25 @@ public class SoClass {
         this.staticVars = staticVars;
     }
 
+    public boolean isInitStarted() {
+        return initStarted;
+    }
+
+    public void setInitStarted(boolean initStarted) {
+        this.initStarted = initStarted;
+    }
+
+
+    public boolean isJlObject(){
+        return "java/lang/Object".equals(this.getName());
+    }
+    public boolean isJlCloneable(){
+        return "java/lang/Cloneable".equals(this.getName());
+    }
+    public boolean isJioSerializable(){
+        return "java/lang/Serializable".equals(this.getName());
+    }
+
     /**
      * 创建对象 wf new指令
      */
@@ -235,5 +323,18 @@ public class SoClass {
 
     @CallerSensitive
     public static native SoClass getCallerClass();
+
+
+    /**
+     * 数组得到class
+     */
+    public SoClass arrayClass(){
+        String arrayClassName = ClassNameHelper.getArrayClassName(this.getName());
+        return this.getSoClassLoader().loadClass(arrayClassName);
+    }
+
+    public String javaName(){
+        return StringUtils.replace(name,"/",".",-1);
+    }
 
 }

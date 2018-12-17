@@ -40,12 +40,18 @@ public class SoThread {
 
     /**
      *
-     * 得到栈顶元素
+     * 得到栈顶元素, 与getTopFrame含义相同，此处不写了
      */
     public Frame getCurrentFrame(){
         return  stack.top();
     }
+    public Frame getTopFrame(){
+        return  stack.top();
+    }
 
+    public boolean isStackEmpty(){
+        return this.stack.isEmpty();
+    }
 
     public Frame NewFrame(int maxLocals, int maxStack){
         return  new Frame(this,maxLocals,maxStack);
@@ -70,5 +76,20 @@ public class SoThread {
 
     public void setStack(Stack stack) {
         this.stack = stack;
+    }
+
+    /**
+     *  得到frames
+     */
+    public Frame[] getFrames(){
+        return this.stack.getFrames();
+    }
+
+    public void clearStack(){
+        this.stack.clear();
+    }
+
+    public Frame newFrames(Method method){
+        return  new Frame(this,method);
     }
 }

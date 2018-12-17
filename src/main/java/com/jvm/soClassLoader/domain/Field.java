@@ -18,9 +18,11 @@ public class Field extends ClassMember {
             return null;
         }
         for (int i = 0; i < cfFields.length; i++) {
-            fields[i].setSoClass(soClass);
-            fields[i].copyClassMember(cfFields[i]);
-            fields[i].copyAttributes(cfFields[i]);
+            Field field = new Field();
+            field.setSoClass(soClass);
+            field.copyClassMember(cfFields[i]);
+            field.copyAttributes(cfFields[i]);
+            fields[i]=field;
         }
         return fields;
     }

@@ -23,7 +23,7 @@ public class FieldRef extends MemberRef {
      * @throws IllegalAccessException
      * @throws NoSuchFieldException
      */
-    public Field resolvedField() throws ClassNotFoundException,IllegalAccessException,NoSuchFieldException{
+    public Field resolvedField(){
         if(this.field == null){
             this.resolveFieldRef();
         }

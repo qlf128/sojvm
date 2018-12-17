@@ -52,6 +52,17 @@ public class Stack {
         return top;
     }
 
+    // 得到栈帧
+    public Frame[] getFrames(){
+        Frame[] frames = new Frame[this.size];
+        int i=0;
+        for(Frame frame =this.top();frame!=null;frame =frame.getLower()){
+            frames[i] =frame;
+            i++;
+        }
+        return frames;
+    }
+
     // 得到栈顶元素
     public Frame top(){
         if (null == topFrame){
@@ -61,6 +72,14 @@ public class Stack {
         return topFrame;
     }
 
+    public boolean isEmpty(){
+        return topFrame == null;
+    }
 
-
+    public Stack clear(){
+        while(!isEmpty()){
+            pop();
+        }
+        return this;
+    }
 }

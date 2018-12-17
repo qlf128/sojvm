@@ -1,5 +1,6 @@
 package com.jvm.runTimeDateArea.model;
 
+import com.jvm.soClassLoader.domain.Field;
 import com.jvm.soClassLoader.domain.SoClass;
 import javafx.collections.ObservableMap;
 
@@ -43,26 +44,25 @@ public class SoArrayObject extends SoObject {
     //TODO 得到数组长度
     public int arrayLength(){
 
-        if(true){
+        Object object = this.getArrayData();
+        if(object instanceof byte[]){
             return bytes().length;
-
-        }else if(true){
+        }else if(object instanceof short[]){
             return shorts().length;
-
-        }else if(true){
-
+        }else if(object instanceof int[]){
             return ints().length;
-        }else if(true){
+        }else if(object instanceof long[]){
             return longs().length;
-        }else if(true){
+        }else if(object instanceof char[]){
             return chars().length;
-        }else if(true){
+        }else if(object instanceof float[]){
             return floats().length;
-        }else if(true){
+        }else if(object instanceof  double[]){
             return doubles().length;
-        }else if(true){
+        }else if(object instanceof SoObject[]){
             return refs().length;
         }
+        System.out.println("No Array");
         return  0;
     }
 

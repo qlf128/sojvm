@@ -2,6 +2,8 @@ package com.jvm.soClassLoader.domain;
 
 import com.jvm.classReader.ClassFile;
 import com.jvm.runTimeDateArea.model.LocalVars;
+import com.jvm.runTimeDateArea.model.SoObject;
+import com.jvm.runTimeDateArea.model.StringPool;
 import com.jvm.search.ReadClass;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
 import com.jvm.soClassLoader.util.FileUtil;
@@ -16,15 +18,17 @@ import java.util.Map;
  */
 public class SoClassLoader {
 
-
-    private ReadClass readClass;
+    //private ReadClass readClass;
+    private String classFilePath;
+    private boolean verboseFlag;
 
     private Map<String,SoClass> soClassMap = new HashMap<>();;
 
     public SoClassLoader(){}
 
-    public SoClassLoader(ReadClass readClass){
-        this.readClass = readClass;
+    public SoClassLoader(String classFilePath, boolean verboseFlag) {
+        this.classFilePath = classFilePath;
+        this.verboseFlag = verboseFlag;
     }
 
     /**
@@ -36,7 +40,7 @@ public class SoClassLoader {
         if(soClassMap!=null&&soClassMap.containsKey(name)){
             return soClassMap.get(name);
         }
-        // 添加Array
+        // 添加加载Array
         if(name.startsWith("[")){
             return this.loadArrayClass(name);
         }
@@ -48,7 +52,7 @@ public class SoClassLoader {
      * 1.️首先找到class文件并把数据读取到内存；
      * 2.然后解析class文件，生成虚拟机可以使用的类数据，并放入方法区；
      * 3.最后进行链接。
-     * @param name
+     * @param name class文件完整路径名
      * @return
      */
     private SoClass loadNonArrayClass(String name){
@@ -61,7 +65,7 @@ public class SoClassLoader {
 
     /**
      * 根据类路径读取字节码文件返回字节数据
-     * @param name
+     * @param name class文件完整路径名
      * @return
      */
     private byte[] readClass(String name){
@@ -245,7 +249,9 @@ public class SoClassLoader {
                     vars.setDouble(slotId, (double)constant);
                     break;
                 case "Ljava/lang/String;":
-                    vars.setDouble(slotId, (double)constant);
+                    String str =  (String) cp.getConstant(cpIndex);
+                    SoObject soStr = StringPool.jString(soClass.getSoClassLoader(), str);
+                    vars.setObj(slotId,soStr);
                     break;
                 default:
                     break;
@@ -253,12 +259,12 @@ public class SoClassLoader {
         }
     }
 
-    public ReadClass getReadClass() {
-        return readClass;
+    public String getClassFilePath() {
+        return classFilePath;
     }
 
-    public void setReadClass(ReadClass readClass) {
-        this.readClass = readClass;
+    public void setClassFilePath(String classFilePath) {
+        this.classFilePath = classFilePath;
     }
 
     public Map<String, SoClass> getSoClassMap() {
@@ -271,7 +277,7 @@ public class SoClassLoader {
 
 
     /**
-     *  新增 加载 数组对象 wf
+     *  新增加载数组对象
      */
     public SoClass loadArrayClass(String name){
 
@@ -279,7 +285,7 @@ public class SoClassLoader {
         soClass.setAccessFlags(AccessFlagConstant.ACC_PUBLIC);
         soClass.setName(name);
         soClass.setSoClassLoader(this);
-        //todo 设置initStarted
+        soClass.setInitStarted(true);
         soClass.setSuperClass(this.loadClass("java/lang/Object"));
         SoClass[] interfaces = new SoClass[2];
         interfaces[0] = this.loadClass("java/lang/Cloneable");
@@ -303,9 +309,6 @@ public class SoClassLoader {
     public String findLibrary(String libname) {
         return null;
     }
-
-
-
 }
 
 

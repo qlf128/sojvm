@@ -3,6 +3,9 @@ package com.jvm.soClassLoader.domain;
 
 import com.jvm.classReader.MemberInfo;
 import com.jvm.classReader.model.attribute.CodeAttribute;
+import com.jvm.soClassLoader.constants.AccessFlagConstant;
+
+import java.util.List;
 
 /**
  * @author luao
@@ -16,6 +19,8 @@ public class Method extends ClassMember {
 
     private byte[] code;
 
+    private int argSlotCount;
+
 
     public static Method[] newMethods(SoClass soClass, MemberInfo[] cfMethods){
         if(cfMethods==null||cfMethods.length<=0){
@@ -23,8 +28,12 @@ public class Method extends ClassMember {
         }
         Method[] methods = new Method[cfMethods.length];
         for (int i = 0; i < cfMethods.length; i++) {
-            methods[i].copyClassMember(cfMethods[i]);
-            methods[i].setSoClass(soClass);
+            Method method = new Method();
+            method.setSoClass(soClass);
+            method.copyClassMember(cfMethods[i]);
+            method.copyAttributes(cfMethods[i]);
+            method.calcArgSlotCount();
+            methods[i] = method;
         }
         return methods;
     }
@@ -35,6 +44,44 @@ public class Method extends ClassMember {
         this.maxLocals = codeAttr.getMaxLocals();
         this.code = codeAttr.getCode();
     }
+
+    public void calcArgSlotCount(){
+        String descriptor = super.getDescriptor();
+        MethodDescriptor methodDescriptor = MethodDescriptorParser.parsedMethodDescriptor(descriptor);
+        List<String> paramTypes = methodDescriptor.getParamTypes();
+        for (String paramType : paramTypes){
+            this.argSlotCount++;
+            if (paramType == null || paramType.isEmpty()){
+                continue;
+            }
+            if (paramType.equals("J") || paramType.equals("D")){
+                this.argSlotCount++;
+            }
+        }
+        if (!super.isStatic()){
+            this.argSlotCount++;
+        }
+    }
+
+    public boolean isSynchronized(){
+        return (super.getAccessFlags() & AccessFlagConstant.ACC_SYNCHRONIZED) != 0;
+    }
+    public boolean isBridge(){
+        return (super.getAccessFlags() & AccessFlagConstant.ACC_BRIDGE) != 0;
+    }
+    public boolean isVarargs(){
+        return (super.getAccessFlags() & AccessFlagConstant.ACC_VARARGS) != 0;
+    }
+    public boolean isNative(){
+        return (super.getAccessFlags() & AccessFlagConstant.ACC_NATIVE) != 0;
+    }
+    public boolean isAbstract(){
+        return (super.getAccessFlags() & AccessFlagConstant.ACC_ABSTRACT) != 0;
+    }
+    public boolean isStrict(){
+        return (super.getAccessFlags() & AccessFlagConstant.ACC_STRICT) != 0;
+    }
+
 
     public int getMaxStack() {
         return maxStack;
@@ -58,5 +105,13 @@ public class Method extends ClassMember {
 
     public void setCode(byte[] code) {
         this.code = code;
+    }
+
+    public int getArgSlotCount() {
+        return argSlotCount;
+    }
+
+    public void setArgSlotCount(int argSlotCount) {
+        this.argSlotCount = argSlotCount;
     }
 }
