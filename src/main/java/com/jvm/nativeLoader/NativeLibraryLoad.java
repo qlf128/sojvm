@@ -3,6 +3,7 @@ package com.jvm.nativeLoader;
 import com.jvm.runTimeDateArea.model.SoArrayObject;
 import com.jvm.soClassLoader.domain.SoClass;
 import com.jvm.soClassLoader.domain.SoClassLoader;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.reflect.Reflection;
@@ -29,9 +30,9 @@ public class NativeLibraryLoad {
     //jni 版本号, 唯一
     private int jniVersion;
     //本地类库的地址
-    private String[] sysPaths;
+    private static String[] sysPaths;
     //系统类库的地址
-    private String[] userPaths;
+    private static String[] userPaths;
     //当前类库的名称
     String name;
     //当前类
@@ -40,13 +41,13 @@ public class NativeLibraryLoad {
     Boolean handle;
 
     //系统加载本地库
-    private static List<NativeLibraryLoad> sysNativeLiararyLoad = new ArrayList<>();
+    public  static List<NativeLibraryLoad> sysNativeLiararyLoad = new ArrayList<>();
     //被加载过的本地库
-    private  List<NativeLibraryLoad> nativeLibaryLoaded = new ArrayList<>();
+    public  List<NativeLibraryLoad> nativeLibaryLoaded = new ArrayList<>();
     //以静态变量的形式保存被加载过的本地库名称
-    private static List<String> nativeLibraryNames = new ArrayList<>();
+    public static List<String> nativeLibraryNames = new ArrayList<>();
     //保存在stack
-    private static Stack<NativeLibraryLoad> nativeLibraryStack = new Stack();
+    public  static Stack<NativeLibraryLoad> nativeLibraryStack = new Stack();
 
     /**
      * 1.查找，加载 和 卸载本地类库
@@ -63,64 +64,99 @@ public class NativeLibraryLoad {
             this.nativeLibraryName = nativeLibraryName;
             this.nativeClass = nativeClass;
         }
-        //加载类库
-        public void loadNativeLibrary(SoClass nativeClass, String nativeName) {
+    //加载类库
+    public static void loadNativeLibrary(SoClass nativeClass, String nativeName) {
 
-            logger.info("method start, param -> nativeClass:【{}】, nativeName:【{}】", nativeClass, nativeName);
-            /**
-             * 1.初始化路径
-             * */
-            if(sysPaths == null) {
-                sysPaths = this.initPaths("sun.boot.library.path");
+        logger.info("method start, param -> nativeClass:【{}】, nativeName:【{}】", nativeClass, nativeName);
+        /**
+         * 1.初始化路径
+         * */
+        if(sysPaths == null) {
+            sysPaths = initPaths("sun.boot.library.path");
+        }
+        userPaths = initPaths("java.library.path");
+
+        /**
+         *2.首先从class load 读取
+         * */
+        SoClassLoader loader = nativeClass == null ? null : nativeClass.getSoClassLoader();
+
+        if(loader != null) {
+
+            String libName = loader.getClassFilePath();
+            File file = new File(libName);
+            //加载类库
+            if(realLodeLibrary(nativeClass, file)) {
+                return;
             }
-            userPaths = initPaths("java.library.path");
-
-            /**
-             *2.首先从class load 读取
-             * */
-            SoClassLoader loader = nativeClass == null ? null : nativeClass.getSoClassLoader();
-
-            if(loader != null) {
-                String libName = loader.findLibrary(nativeName);
-                File file = new File(libName);
-                //加载类库
-                if(realLodeLibrary(nativeClass, file)) {
-                    return;
-                }
-            }
-            /**
-             * 3.从sysPaths读取
-             * */
-            for(int i=0; i < sysPaths.length; i++ ) {
-                File libFile = new File(sysPaths[i], System.mapLibraryName(nativeName));
-                if(realLodeLibrary(nativeClass, libFile)) {
-                    return;
-                }
-            }
-
-
-            /**
-             * 4.从userPaths读取
-             * */
-            for(int i=0; i < userPaths.length; i++) {
-                // mapLibraryName将nativeName映射为库文件的文件名
-                File libFile = new File(userPaths[i], System.mapLibraryName(nativeName));
-                if(realLodeLibrary(nativeClass, libFile)) {
-                    return;
-                }
+        }
+        /**
+         * 3.从sysPaths读取
+         * */
+        for(int i=0; i < sysPaths.length; i++ ) {
+            File libFile = new File(sysPaths[i], System.mapLibraryName(nativeName));
+            if(realLodeLibrary(nativeClass, libFile)) {
+                return;
             }
         }
 
+        /**
+         * 4.从userPaths读取
+         * */
+        for(int i=0; i < userPaths.length; i++) {
+            // mapLibraryName将nativeName映射为库文件的文件名
+            File libFile = new File(userPaths[i], System.mapLibraryName(nativeName));
+            if(realLodeLibrary(nativeClass, libFile)) {
+                return;
+            }
+        }
+    }
+
    // 初始化本地库的文件路径
 
-    private String[] initPaths(String propertyName) {
+    private static String[] initPaths(String propertyName) {
+
             logger.info("method start, param -> path", propertyName);
 
-            String getpath = System.getProperty(propertyName);
+
+            String path = NativeSys.getProperty(propertyName);
+
+            int len = path.length();
+
+            if(path == null || path.length() == 0) {
+                throw new RuntimeException(propertyName + "is null");
+            }
+
             //系统默认路径分隔符
             String ps = File.pathSeparator;
 
-            return null;
+
+            int i, j, n;
+            // Count the separators in the path
+            i = path.indexOf(ps);
+            n = 0;
+            while (i >= 0) {
+                n++;
+                i = path.indexOf(ps, i + 1);
+            }
+
+            // allocate the array of paths - n :'s = n + 1 path elements
+            String[] paths = new String[n + 1];
+
+            // Fill the array with paths from the ldpath
+            n = i = 0;
+            j = path.indexOf(ps);
+            while (j >= 0) {
+                if (j - i > 0) {
+                    paths[n++] = path.substring(i, j);
+                } else if (j - i == 0) {
+                    paths[n++] = ".";
+                }
+                i = j + 1;
+                j = path.indexOf(ps, i);
+            }
+            paths[n] = path.substring(i, len);
+            return paths;
 
     }
 
@@ -132,7 +168,7 @@ public class NativeLibraryLoad {
         //根据fileLibName在本地类库查找
         String libraryName = findBuiltinLib(libFile.getName());
 
-        if(!libraryName.isEmpty()) {
+        if(!StringUtils.isEmpty(libraryName)) {
             //action
             PrivilegedAction privilegedAction = new PrivilegedAction<Object>() {
                 public Object run() {
@@ -199,18 +235,7 @@ public class NativeLibraryLoad {
     }
 
 
-    // Invoked in the VM class linking code.
-    static long findNative(SoClass soClass, String name) {
-        NativeLibraryLoad nativeLibraryLoad = new NativeLibraryLoad(name, soClass);
-        List<NativeLibraryLoad> libs =
-                soClass != null ? nativeLibraryLoad.nativeLibaryLoaded : sysNativeLiararyLoad;
-            for (NativeLibraryLoad lib : libs) {
-                long entry = lib.find(name);
-                if (entry != 0)
-                    return entry;
-            }
-        return 0;
-    }
+
 
 
 

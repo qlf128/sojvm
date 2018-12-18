@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import sun.reflect.CallerSensitive;
 import sun.reflect.Reflection;
 
+import java.util.Properties;
+
 /**
  * @Description 运行本地方法驱动
  * @Author wangshasha
@@ -16,16 +18,27 @@ public class NativeDriver {
 
     private static Logger logger = LoggerFactory.getLogger(NativeDriver.class);
 
+    private static native void registerNatives();
+    static {
+        registerNatives();
+    }
 
-    public static void nativeLoad(String libName) {
-
-        SoClass soClass = SoClass.getCallerClass();
-
-        NativeLibraryLoad nativeLibraryLoad = new NativeLibraryLoad();
+    public NativeDriver() {
+    }
 
 
+    //加载本地类库
+    @CallerSensitive
+    public static void nativeLibraryLoad(String libName) {
+       NativeLibraryLoad.loadNativeLibrary(NativeReflection.getCallerClass(), libName);
 
     }
+
+
+
+
+
+
 
 
 
