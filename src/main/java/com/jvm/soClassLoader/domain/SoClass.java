@@ -1,6 +1,7 @@
 package com.jvm.soClassLoader.domain;
 
 import com.jvm.classReader.ClassFile;
+import com.jvm.classReader.model.attribute.SourceFileAttribute;
 import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.runTimeDateArea.model.Slot;
 import com.jvm.runTimeDateArea.model.SoObject;
@@ -26,6 +27,8 @@ public class SoClass {
     private Field[] fields;
 
     private Method[] methods;
+
+    private String sourceFile;
 
     private SoClassLoader soClassLoader;
 
@@ -56,6 +59,17 @@ public class SoClass {
         this.constantPool = com.jvm.soClassLoader.domain.ConstantPool.newConstantPool(this, cp);
         this.fields = Field.newFields(this, classFile.getFields());
         this.methods = Method.newMethods(this,classFile.getMethods());
+        this.sourceFile = getSourceFile(classFile);
+    }
+
+    private String getSourceFile(ClassFile classFile){
+        SourceFileAttribute sfAttr = classFile.sourceFileAttribute();
+
+        if(sfAttr != null){
+            return sfAttr.getFileName();
+        }
+
+        return "Unknown";
     }
 
     public boolean isPublic(){
@@ -68,6 +82,10 @@ public class SoClass {
 
     public boolean isSuper(){
         return 0!=(this.accessFlags&AccessFlagConstant.ACC_SUPER);
+    }
+
+    public boolean isSuperClassOf(SoClass other){
+        return other.isSubClassOf(this);
     }
 
     public boolean isInterface(){
@@ -303,6 +321,13 @@ public class SoClass {
         this.initStarted = initStarted;
     }
 
+    public String getSourceFile() {
+        return sourceFile;
+    }
+
+    public void setSourceFile(String sourceFile) {
+        this.sourceFile = sourceFile;
+    }
 
     public boolean isJlObject(){
         return "java/lang/Object".equals(this.getName());

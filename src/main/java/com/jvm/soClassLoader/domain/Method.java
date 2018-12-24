@@ -3,6 +3,9 @@ package com.jvm.soClassLoader.domain;
 
 import com.jvm.classReader.MemberInfo;
 import com.jvm.classReader.model.attribute.CodeAttribute;
+import com.jvm.classReader.model.attribute.LineNumberTableAttribute;
+import com.jvm.heap.ExceptionHandler;
+import com.jvm.heap.ExceptionTable;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
 
 import java.util.List;
@@ -21,6 +24,9 @@ public class Method extends ClassMember {
 
     private int argSlotCount;
 
+    private ExceptionTable exceptionTable;
+
+    private LineNumberTableAttribute lineNumberTable;
 
     public static Method[] newMethods(SoClass soClass, MemberInfo[] cfMethods){
         if(cfMethods==null||cfMethods.length<=0){
@@ -43,6 +49,7 @@ public class Method extends ClassMember {
         this.maxStack = codeAttr.getMaxStack();
         this.maxLocals = codeAttr.getMaxLocals();
         this.code = codeAttr.getCode();
+        this.exceptionTable = exceptionTable.newExceptionTable(codeAttr.getExceptionTable(), codeAttr.getConstantPool());
     }
 
     public void calcArgSlotCount(){
@@ -61,6 +68,28 @@ public class Method extends ClassMember {
         if (!super.isStatic()){
             this.argSlotCount++;
         }
+    }
+
+    public int findExceptionHandler(SoClass exClass, int pc){
+        ExceptionHandler handler = exceptionTable.findExceptionHandler(exClass, pc);
+        if(handler == null){
+            return handler.getHandlerPc();
+        }
+
+        return -1;
+
+    }
+
+    public int getLineNumber(int pc){
+        if (isNative()) {
+            return -2;
+        }
+
+        if(getLineNumberTable() == null){
+            return -1;
+        }
+
+        return getLineNumberTable().getLineNumber(pc);
     }
 
     public boolean isSynchronized(){
@@ -113,5 +142,13 @@ public class Method extends ClassMember {
 
     public void setArgSlotCount(int argSlotCount) {
         this.argSlotCount = argSlotCount;
+    }
+
+    public LineNumberTableAttribute getLineNumberTable() {
+        return lineNumberTable;
+    }
+
+    public void setLineNumberTable(LineNumberTableAttribute lineNumberTable) {
+        this.lineNumberTable = lineNumberTable;
     }
 }

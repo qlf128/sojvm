@@ -138,4 +138,13 @@ public class ClassFile {
         return interfaceNames;
 
     }
+
+    public SourceFileAttribute sourceFileAttribute(){
+        for(int i=0; i<attributes.length;i++){
+            if(attributes[i] instanceof SourceFileAttribute){
+                return (SourceFileAttribute)attributes[i];
+            }
+        }
+        return null;
+    }
 }

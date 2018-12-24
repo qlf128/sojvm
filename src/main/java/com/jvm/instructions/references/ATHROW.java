@@ -34,7 +34,7 @@ public class ATHROW extends NoOperandsInstruction{
             Frame frame = thread.getCurrentFrame();
             int pc = frame.getNextPC() - 1;
 
-            int handlerPc = frame.getMethod().FindExceptionHandler(ex.getSoClass(), pc);
+            int handlerPc = frame.getMethod().findExceptionHandler(ex.getSoClass(), pc);
             if(handlerPc > 0){
                 OperandStack stack = frame.getOperandStack();
                 stack.clear();

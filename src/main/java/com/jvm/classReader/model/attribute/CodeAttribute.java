@@ -53,6 +53,13 @@ public class CodeAttribute extends AttributeInfo {
         return null;
     }
 
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
+    public void setConstantPool(ConstantPool constantPool) {
+        this.constantPool = constantPool;
+    }
 
     //异常表，包含四个指针，分别为
     public static class ExceptionTableEntry {
