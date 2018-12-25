@@ -49,7 +49,7 @@ public class Method extends ClassMember {
         this.maxStack = codeAttr.getMaxStack();
         this.maxLocals = codeAttr.getMaxLocals();
         this.code = codeAttr.getCode();
-        this.exceptionTable = exceptionTable.newExceptionTable(codeAttr.getExceptionTable(), codeAttr.getConstantPool());
+        this.exceptionTable = exceptionTable.newExceptionTable(codeAttr.getExceptionTable(), this.getSoClass().getConstantPool());
     }
 
     public void calcArgSlotCount(){
