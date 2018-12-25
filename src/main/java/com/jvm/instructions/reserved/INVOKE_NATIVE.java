@@ -13,7 +13,7 @@ public class INVOKE_NATIVE extends NoOperandsInstruction{
         String className = method.getSoClass().getName();
         String methodName = method.getName();
         String methodDescriptor = method.getDescriptor();
-
+/*
         nativeMethod = native.FindNativeMethod(className, methodName, methodDescriptor);
 
         if(nativeMethod == null){
@@ -22,5 +22,6 @@ public class INVOKE_NATIVE extends NoOperandsInstruction{
         }
 
         nativeMethod(frame);
+        */
     }
 }
