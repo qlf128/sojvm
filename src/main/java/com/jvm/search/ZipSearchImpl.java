@@ -67,7 +67,6 @@ public class ZipSearchImpl implements Search {
             }
             zipIn.close();
             zipFile.close();
-            srcFile.delete();
             return true;
         } catch (Exception e) {
             System.out.println(e.getCause());

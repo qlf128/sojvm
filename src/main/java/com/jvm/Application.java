@@ -1,9 +1,8 @@
 package com.jvm;
 
 import com.jvm.interpreter.Interpret;
-import com.jvm.search.FileSearchImpl;
-import com.jvm.search.ReadClass;
-import com.jvm.search.Search;
+import com.jvm.option.OptionClass;
+import com.jvm.search.*;
 import com.jvm.soClassLoader.domain.Method;
 import com.jvm.soClassLoader.domain.SoClass;
 import com.jvm.soClassLoader.domain.SoClassLoader;
@@ -31,7 +30,11 @@ public class Application {
         //for (String path : pathList) {
         //    InputStream inputStream = ReadClass.readClass(path);
         //}
-
+        String jreOption = "";
+        String cpOption = "";
+        String className = "";
+        ClassPath classPath = OptionClass.getInstance().parse(jreOption, cpOption);
+        EntryResult result = classPath.readClass(className);
         startJVM();
     }
 

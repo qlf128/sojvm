@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @Description: 根拒绝对路径获取流
@@ -25,6 +26,17 @@ public class ReadClass {
     public static InputStream readClass(String path) {
         try {
             return new FileInputStream(new File(path));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static InputStream readClass(ClassPath classPath, String className) {
+
+        try {
+            return new FileInputStream(new File(className));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;

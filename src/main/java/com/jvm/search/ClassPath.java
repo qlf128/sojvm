@@ -10,51 +10,74 @@ public class ClassPath {
     /**
      * 启动类路径
      */
-    private String bootClassPath;
+    private Entry bootClassEntry;
 
     /**
      * 扩展类路径
      */
-    private String extClassPath;
+    private Entry extClassEntry;
 
     /**
      * 用户类路径
      */
-    private String userClassPath;
+    private Entry userClassEntry;
 
     public ClassPath() {
 
     }
 
-    public ClassPath(String bootClassPath, String extClassPath, String userClassPath) {
-        this.bootClassPath = bootClassPath;
-        this.extClassPath = extClassPath;
-        this.userClassPath = userClassPath;
+    public ClassPath(Entry bootClassEntry, Entry extClassEntry, Entry userClassEntry) {
+        this.bootClassEntry = bootClassEntry;
+        this.extClassEntry = extClassEntry;
+        this.userClassEntry = userClassEntry;
     }
 
 
-
-    public String getBootClassPath() {
-        return bootClassPath;
+    /**
+     * @Description: 读取Class
+     * @Author: WindPursuer
+     * @Date 2018/12/27 8:24 PM
+     */
+    public EntryResult readClass(String className) {
+        className = className + ".class";
+        EntryResult entryResult = this.bootClassEntry.readClass(className);
+        if (entryResult.isSuccess()) {
+            return entryResult;
+        }
+        entryResult = this.extClassEntry.readClass(className);
+        if (entryResult.isSuccess()) {
+            return entryResult;
+        }
+        entryResult = this.userClassEntry.readClass(className);
+        if (entryResult.isSuccess()) {
+            return entryResult;
+        }
+        return new EntryResult(false);
+        
     }
 
-    public void setBootClassPath(String bootClassPath) {
-        this.bootClassPath = bootClassPath;
+
+    public Entry getBootClassEntry() {
+        return bootClassEntry;
     }
 
-    public String getExtClassPath() {
-        return extClassPath;
+    public void setBootClassEntry(Entry bootClassEntry) {
+        this.bootClassEntry = bootClassEntry;
     }
 
-    public void setExtClassPath(String extClassPath) {
-        this.extClassPath = extClassPath;
+    public Entry getExtClassEntry() {
+        return extClassEntry;
     }
 
-    public String getUserClassPath() {
-        return userClassPath;
+    public void setExtClassEntry(Entry extClassEntry) {
+        this.extClassEntry = extClassEntry;
     }
 
-    public void setUserClassPath(String userClassPath) {
-        this.userClassPath = userClassPath;
+    public Entry getUserClassEntry() {
+        return userClassEntry;
+    }
+
+    public void setUserClassEntry(Entry userClassEntry) {
+        this.userClassEntry = userClassEntry;
     }
 }
