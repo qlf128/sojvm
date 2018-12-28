@@ -115,7 +115,7 @@ public class OptionClass {
      */
     private static String getJreDir() {
         Properties props=System.getProperties(); //系统属性
-        System.out.println("Java的安装路径："+ props.getProperty("java.home"));
+        logger.info("Java的安装路径："+ props.getProperty("java.home"));
         return  props.getProperty("java.home");
     }
 
