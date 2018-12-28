@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,7 +23,7 @@ public class WildcardEntry implements Entry {
     /**
      * entry集合
      */
-    private List<Entry> entryList;
+    private List<Entry> entryList = new ArrayList<>();
 
 
     public WildcardEntry() {
@@ -34,7 +35,7 @@ public class WildcardEntry implements Entry {
         path = path.substring(0, path.length() - 1);
         File file = new File(path);
         for (File fileTemp : file.listFiles()) {
-            if (file.isDirectory()) {
+            if (fileTemp.isDirectory()) {
                 continue;
             }
             String filePath = fileTemp.getAbsolutePath();

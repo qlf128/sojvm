@@ -172,7 +172,8 @@ public class NativeLibraryLoad {
             //action
             PrivilegedAction privilegedAction = new PrivilegedAction<Object>() {
                 public Object run() {
-                    return libFile.exists() ? Boolean.TRUE : null;
+                    //return libFile.exists() ? Boolean.TRUE : null;
+                    return null;
                 }};
             boolean exists = AccessController.doPrivileged(privilegedAction) != null;
             String name = null;

@@ -2,7 +2,7 @@
 <configuration>
     <property name="LOG_DIR" value="${catalina.base}/logs"/>
 
-    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%traceId] [%thread] [%C:%L] %-5level  %msg%n"/>
+    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%C:%L] %-5level  %msg%n"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>

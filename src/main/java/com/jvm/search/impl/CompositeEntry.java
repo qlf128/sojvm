@@ -7,6 +7,7 @@ import com.jvm.search.EntryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class CompositeEntry implements Entry {
     /**
      * entry集合
      */
-    private List<Entry> entryList;
+    private List<Entry> entryList = new ArrayList<>();
 
 
     /**

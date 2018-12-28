@@ -39,32 +39,32 @@ public class ZipEntry implements Entry {
     public EntryResult readClass(String className) {
         File srcFile = new File(this.absPath);
         int a = srcFile.getName().lastIndexOf(".");
-        String dstFilePath = srcFile.getParentFile().getAbsolutePath() + File.separator + srcFile.getName().substring(0, a);
+        String dstFilePath = "./lib" + File.separator + srcFile.getName().substring(0, a);
         zipContraMultiFile(srcFile, dstFilePath);
-        File file = new File(dstFilePath);
+        File file = new File(dstFilePath + "/" + className);
         EntryResult entryResult = new EntryResult(true);
-        for (File fileTemp : file.listFiles()) {
-            if (fileTemp.getName().equals(className)) {
-                ByteArrayOutputStream out;
-                try {
-                    FileInputStream in = new FileInputStream(file);
-                    out = new ByteArrayOutputStream();
-                    byte[] b = new byte[1024];
-                    while ((in.read(b)) != -1) {
-                        out.write(b, 0, b.length);
-                    }
-                    entryResult.setData(out.toByteArray());
-                    out.close();
-                    in.close();
-                } catch (Exception e) {
-                    entryResult.setError(e.getMessage());
-                    entryResult.setSuccess(false);
-                    e.printStackTrace();
+
+        if (file.exists() && file.isFile() && className.endsWith(".class")) {
+            ByteArrayOutputStream out;
+            try {
+                FileInputStream in = new FileInputStream(file);
+                out = new ByteArrayOutputStream();
+                byte[] b = new byte[1024];
+                while ((in.read(b)) != -1) {
+                    out.write(b, 0, b.length);
                 }
-                entryResult.setEntry(this);
-                return entryResult;
+                entryResult.setData(out.toByteArray());
+                out.close();
+                in.close();
+            } catch (Exception e) {
+                entryResult.setError(e.getMessage());
+                entryResult.setSuccess(false);
+                e.printStackTrace();
             }
+            entryResult.setEntry(this);
+            return entryResult;
         }
+
         entryResult.setSuccess(false);
         entryResult.setError("not find");
         return entryResult;
@@ -93,6 +93,10 @@ public class ZipEntry implements Entry {
                         outFile.mkdirs();
                     }
                     continue;
+                }
+                File file = outFile.getParentFile();
+                if (!file.exists()) {
+                    file.mkdirs();
                 }
                 in = zipFile.getInputStream(entry);
                 out = new FileOutputStream(outFile);
