@@ -1,10 +1,9 @@
 package com.jvm.instructions.references;
 
-import com.jvm.instructions.NoOperandsInstruction;
+import com.jvm.instructions.base.instruction.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.OperandStack;
 import com.jvm.runTimeDateArea.model.SoArrayObject;
-import com.jvm.runTimeDateArea.model.SoObject;
 
 /**
  * @Author: wangfa

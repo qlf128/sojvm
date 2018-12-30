@@ -2,7 +2,7 @@ package com.jvm.instructions.base;
 
 import com.jvm.runTimeDateArea.model.Frame;
 
-public class Base {
+public class BranchLogic {
 
     /**
      * 跳转

@@ -1,14 +1,11 @@
 package com.jvm.interpreter;
 
-import com.jvm.classReader.MemberInfo;
-import com.jvm.classReader.model.attribute.CodeAttribute;
-import com.jvm.instructions.BytecodeReader;
+import com.jvm.instructions.base.BytecodeReader;
 import com.jvm.instructions.Factory;
-import com.jvm.instructions.Instructions;
+import com.jvm.instructions.base.instruction.Instructions;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.SoThread;
 import com.jvm.soClassLoader.domain.Method;
-import com.jvm.util.NativeMethodUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +22,10 @@ public class Interpret {
             logFrames(soThread);
             e.printStackTrace();
         }
+    }
+
+    public void interpret(SoThread thread, boolean logInst){
+        loop(thread, logInst);
     }
 
     private static void loop(SoThread soThread, boolean logInst) {

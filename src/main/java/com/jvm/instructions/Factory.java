@@ -1,5 +1,6 @@
 package com.jvm.instructions;
 
+import com.jvm.instructions.base.instruction.Instructions;
 import com.jvm.instructions.comparisons.dcmp.DCMPG;
 import com.jvm.instructions.comparisons.dcmp.DCMPL;
 import com.jvm.instructions.comparisons.fcmp.FCMPG;
@@ -87,7 +88,6 @@ import com.jvm.instructions.stores.istore.*;
 import com.jvm.instructions.stores.lstore.*;
 import com.jvm.instructions.stores.xastore.*;
 import com.jvm.util.NativeMethodUtil;
-import com.sun.org.apache.bcel.internal.generic.MONITOREXIT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

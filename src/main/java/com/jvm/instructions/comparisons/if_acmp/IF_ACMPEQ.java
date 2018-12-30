@@ -1,7 +1,7 @@
 package com.jvm.instructions.comparisons.if_acmp;
 
-import com.jvm.instructions.BranchInstruction;
-import com.jvm.instructions.base.Base;
+import com.jvm.instructions.base.instruction.BranchInstruction;
+import com.jvm.instructions.base.BranchLogic;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.OperandStack;
 
@@ -16,7 +16,7 @@ public class IF_ACMPEQ extends BranchInstruction{
         Object ref1 = stack.popObj();
 
         if(ref1 == ref2){
-            Base.branch(frame, this.getOffset());
+            BranchLogic.branch(frame, this.getOffset());
         }
     }
 }

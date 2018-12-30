@@ -1,6 +1,6 @@
 package com.jvm.instructions.constants.ldc;
 
-import com.jvm.instructions.Index8Instruction;
+import com.jvm.instructions.base.instruction.Index8Instruction;
 import com.jvm.runTimeDateArea.model.*;
 import com.jvm.soClassLoader.domain.ConstantPool;
 import com.jvm.soClassLoader.domain.SoClass;

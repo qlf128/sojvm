@@ -1,6 +1,6 @@
 package com.jvm.instructions.stack.dup;
 
-import com.jvm.instructions.NoOperandsInstruction;
+import com.jvm.instructions.base.instruction.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.OperandStack;
 import com.jvm.runTimeDateArea.model.Slot;

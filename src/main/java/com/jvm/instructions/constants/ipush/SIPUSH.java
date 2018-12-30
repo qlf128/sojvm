@@ -1,7 +1,7 @@
 package com.jvm.instructions.constants.ipush;
 
-import com.jvm.instructions.BytecodeReader;
-import com.jvm.instructions.Instructions;
+import com.jvm.instructions.base.BytecodeReader;
+import com.jvm.instructions.base.instruction.Instructions;
 import com.jvm.runTimeDateArea.model.Frame;
 
 /**

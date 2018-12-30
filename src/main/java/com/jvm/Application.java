@@ -52,9 +52,11 @@ public class Application {
 
     private static void startJVM(){
         String path = "/Users/wangfa/IdeaProjects/sojvm/sojvm/src/main/java/com/jvm/util//Test.class";
-        SoClassLoader loader = new SoClassLoader(path,true);
+       //SoClassLoader loader = new SoClassLoader(path,true);
         //String className = "com/sojvm/Test";
-        SoClass mainClass = loader.loadClass(loader.getClassFilePath());
+        //SoClass mainClass = loader.loadClass(loader.getClassFilePath());
+        SoClass mainClass = new SoClassLoader().loadClass(path);
+
         Method mainMethod = mainClass.getMainMethod();
         if (mainMethod != null){
             Interpret.interpret(mainMethod,true);

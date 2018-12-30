@@ -1,11 +1,12 @@
-package com.jvm.instructions;
+package com.jvm.instructions.base.instruction;
 
+import com.jvm.instructions.base.BytecodeReader;
 import com.jvm.runTimeDateArea.model.Frame;
 
 /**
  * 跳转指令
  */
-public abstract class BranchInstruction implements Instructions{
+public abstract class BranchInstruction implements Instructions {
     int offset;//跳转偏移量
 
     public void fetchOperands(BytecodeReader byteCodeReader){

@@ -1,5 +1,6 @@
-package com.jvm.instructions;
+package com.jvm.instructions.base.instruction;
 
+import com.jvm.instructions.base.BytecodeReader;
 import com.jvm.runTimeDateArea.model.Frame;
 
 public interface Instructions {

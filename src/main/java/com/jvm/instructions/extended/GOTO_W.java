@@ -1,8 +1,8 @@
 package com.jvm.instructions.extended;
 
-import com.jvm.instructions.BytecodeReader;
-import com.jvm.instructions.Instructions;
-import com.jvm.instructions.base.Base;
+import com.jvm.instructions.base.BytecodeReader;
+import com.jvm.instructions.base.instruction.Instructions;
+import com.jvm.instructions.base.BranchLogic;
 import com.jvm.runTimeDateArea.model.Frame;
 
 /**
@@ -16,7 +16,7 @@ public class GOTO_W implements Instructions{
     }
 
     public void execute(Frame frame){
-        Base.branch(frame, this.offset);
+        BranchLogic.branch(frame, this.offset);
     }
 
     public int getOffset() {

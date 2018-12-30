@@ -1,6 +1,6 @@
 package com.jvm.instructions.stores.astore;
 
-import com.jvm.instructions.NoOperandsInstruction;
+import com.jvm.instructions.base.instruction.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
 
 public class ASTORE_2 extends NoOperandsInstruction {

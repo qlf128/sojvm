@@ -38,6 +38,12 @@ public class UnsignedDataTypeConvertUtil {
 
     public static void main(String[] args){
         short a = -3;
+        byte b = -0x33;
+
+        byte[] array = new byte[10];
+        array[0] = -5;
+
+        System.out.println(Integer.toHexString(array[1]));
         System.out.println(getUnsignedShort(a));
     }
 }

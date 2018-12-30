@@ -1,11 +1,8 @@
 package com.jvm.instructions.reserved;
 
-import com.jvm.instructions.NoOperandsInstruction;
+import com.jvm.instructions.base.instruction.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.soClassLoader.domain.Method;
-import com.jvm.util.NativeMethodUtil;
-
-import java.lang.annotation.Native;
 
 public class INVOKE_NATIVE extends NoOperandsInstruction{
     public void execute(Frame frame){

@@ -1,8 +1,8 @@
 package com.jvm.instructions.control;
 
-import com.jvm.instructions.BytecodeReader;
-import com.jvm.instructions.Instructions;
-import com.jvm.instructions.base.Base;
+import com.jvm.instructions.base.BytecodeReader;
+import com.jvm.instructions.base.instruction.Instructions;
+import com.jvm.instructions.base.BranchLogic;
 import com.jvm.runTimeDateArea.model.Frame;
 
 /**
@@ -38,7 +38,7 @@ public class TABLE_SWITCH implements Instructions {
         }else{
             offset = defaultOffset;
         }
-        Base.branch(frame, offset);
+        BranchLogic.branch(frame, offset);
     }
 
 

@@ -1,4 +1,4 @@
-package com.jvm.instructions;
+package com.jvm.instructions.base.instruction;
 
 public class InstructionException extends Exception{
     public InstructionException() {

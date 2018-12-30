@@ -1,8 +1,8 @@
 package com.jvm.instructions.extended;
 
-import com.jvm.instructions.BytecodeReader;
-import com.jvm.instructions.Index8Instruction;
-import com.jvm.instructions.Instructions;
+import com.jvm.instructions.base.BytecodeReader;
+import com.jvm.instructions.base.instruction.Index8Instruction;
+import com.jvm.instructions.base.instruction.Instructions;
 import com.jvm.instructions.loads.aload.ALOAD;
 import com.jvm.instructions.loads.dload.DLOAD;
 import com.jvm.instructions.loads.fload.FLOAD;

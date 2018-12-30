@@ -83,7 +83,7 @@ public class NativeLibraryLoad {
 
         if(loader != null) {
 
-            String libName = loader.getClassFilePath();
+            String libName = loader.getClassFilePath().toString();
             File file = new File(libName);
             //加载类库
             if(realLodeLibrary(nativeClass, file)) {

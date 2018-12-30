@@ -1,7 +1,7 @@
 package com.jvm.instructions.references;
 
-import com.jvm.instructions.BytecodeReader;
-import com.jvm.instructions.NoOperandsInstruction;
+import com.jvm.instructions.base.BytecodeReader;
+import com.jvm.instructions.base.instruction.NoOperandsInstruction;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.OperandStack;
 import com.jvm.runTimeDateArea.model.SoArrayObject;
@@ -9,7 +9,6 @@ import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.soClassLoader.domain.ClassRef;
 import com.jvm.soClassLoader.domain.ConstantPool;
 import com.jvm.soClassLoader.domain.SoArrayClass;
-import com.jvm.soClassLoader.domain.SoClass;
 
 import java.util.Arrays;
 

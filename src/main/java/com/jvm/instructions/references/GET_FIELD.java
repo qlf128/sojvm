@@ -1,6 +1,6 @@
 package com.jvm.instructions.references;
 
-import com.jvm.instructions.Index16Instruction;
+import com.jvm.instructions.base.instruction.Index16Instruction;
 import com.jvm.runTimeDateArea.model.*;
 import com.jvm.soClassLoader.domain.ConstantPool;
 import com.jvm.soClassLoader.domain.Field;

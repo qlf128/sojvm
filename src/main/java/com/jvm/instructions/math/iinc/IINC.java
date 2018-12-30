@@ -1,7 +1,7 @@
 package com.jvm.instructions.math.iinc;
 
-import com.jvm.instructions.BytecodeReader;
-import com.jvm.instructions.Instructions;
+import com.jvm.instructions.base.BytecodeReader;
+import com.jvm.instructions.base.instruction.Instructions;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.LocalVars;
 

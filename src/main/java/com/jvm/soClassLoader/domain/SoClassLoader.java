@@ -4,6 +4,7 @@ import com.jvm.classReader.ClassFile;
 import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.runTimeDateArea.model.StringPool;
+import com.jvm.search.ClassPath;
 import com.jvm.search.ReadClass;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
 import com.jvm.soClassLoader.util.FileUtil;
@@ -19,14 +20,14 @@ import java.util.Map;
 public class SoClassLoader {
 
     //private ReadClass readClass;
-    private String classFilePath;
+    private ClassPath classFilePath;
     private boolean verboseFlag;
 
     private Map<String,SoClass> soClassMap = new HashMap<>();;
 
     public SoClassLoader(){}
 
-    public SoClassLoader(String classFilePath, boolean verboseFlag) {
+    public SoClassLoader(ClassPath classFilePath, boolean verboseFlag) {
         this.classFilePath = classFilePath;
         this.verboseFlag = verboseFlag;
     }
@@ -259,12 +260,21 @@ public class SoClassLoader {
         }
     }
 
-    public String getClassFilePath() {
+
+    public ClassPath getClassFilePath() {
         return classFilePath;
     }
 
-    public void setClassFilePath(String classFilePath) {
+    public void setClassFilePath(ClassPath classFilePath) {
         this.classFilePath = classFilePath;
+    }
+
+    public boolean isVerboseFlag() {
+        return verboseFlag;
+    }
+
+    public void setVerboseFlag(boolean verboseFlag) {
+        this.verboseFlag = verboseFlag;
     }
 
     public Map<String, SoClass> getSoClassMap() {

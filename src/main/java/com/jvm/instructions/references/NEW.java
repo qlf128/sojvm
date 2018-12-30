@@ -1,7 +1,7 @@
 package com.jvm.instructions.references;
 
-import com.jvm.instructions.ClassInitLogic;
-import com.jvm.instructions.Index16Instruction;
+import com.jvm.instructions.base.ClassInitLogic;
+import com.jvm.instructions.base.instruction.Index16Instruction;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.soClassLoader.domain.ClassRef;

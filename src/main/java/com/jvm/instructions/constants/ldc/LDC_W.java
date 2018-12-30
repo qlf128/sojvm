@@ -1,7 +1,6 @@
 package com.jvm.instructions.constants.ldc;
 
-import com.jvm.instructions.Index16Instruction;
-import com.jvm.instructions.Index8Instruction;
+import com.jvm.instructions.base.instruction.Index16Instruction;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.OperandStack;
 import com.jvm.runTimeDateArea.model.SoObject;

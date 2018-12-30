@@ -1,6 +1,6 @@
 package com.jvm.instructions.stores.dstore;
 
-import com.jvm.instructions.Index8Instruction;
+import com.jvm.instructions.base.instruction.Index8Instruction;
 import com.jvm.runTimeDateArea.model.Frame;
 
 public class DSTORE extends Index8Instruction {

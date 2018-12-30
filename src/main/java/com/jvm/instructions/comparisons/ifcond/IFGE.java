@@ -1,7 +1,7 @@
 package com.jvm.instructions.comparisons.ifcond;
 
-import com.jvm.instructions.BranchInstruction;
-import com.jvm.instructions.base.Base;
+import com.jvm.instructions.base.instruction.BranchInstruction;
+import com.jvm.instructions.base.BranchLogic;
 import com.jvm.runTimeDateArea.model.Frame;
 
 /**
@@ -19,7 +19,7 @@ public class IFGE extends BranchInstruction{
     public void execute(Frame frame){
         int val = frame.getOperandStack().popInt();
         if(val >= 0){
-            Base.branch(frame, this.getOffset());
+            BranchLogic.branch(frame, this.getOffset());
         }
     }
 }

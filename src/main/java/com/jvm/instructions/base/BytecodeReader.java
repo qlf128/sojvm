@@ -1,4 +1,4 @@
-package com.jvm.instructions;
+package com.jvm.instructions.base;
 
 import com.jvm.util.UnsignedDataTypeConvertUtil;
 

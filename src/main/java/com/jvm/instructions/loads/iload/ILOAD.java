@@ -1,6 +1,6 @@
 package com.jvm.instructions.loads.iload;
 
-import com.jvm.instructions.Index8Instruction;
+import com.jvm.instructions.base.instruction.Index8Instruction;
 import com.jvm.runTimeDateArea.model.Frame;
 
 public class ILOAD extends Index8Instruction{

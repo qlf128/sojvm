@@ -1,8 +1,8 @@
 package com.jvm.instructions.references;
 
-import com.jvm.instructions.ClassInitLogic;
-import com.jvm.instructions.Index16Instruction;
-import com.jvm.instructions.MethodInvokeLogic;
+import com.jvm.instructions.base.ClassInitLogic;
+import com.jvm.instructions.base.instruction.Index16Instruction;
+import com.jvm.instructions.base.MethodInvokeLogic;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.soClassLoader.domain.ConstantPool;
 import com.jvm.soClassLoader.domain.Method;

@@ -1,9 +1,8 @@
 package com.jvm.instructions.references;
 
-import com.jvm.instructions.BytecodeReader;
-import com.jvm.instructions.Index16Instruction;
-import com.jvm.instructions.Instructions;
-import com.jvm.instructions.MethodInvokeLogic;
+import com.jvm.instructions.base.BytecodeReader;
+import com.jvm.instructions.base.instruction.Instructions;
+import com.jvm.instructions.base.MethodInvokeLogic;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.soClassLoader.domain.*;
