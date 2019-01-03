@@ -5,6 +5,7 @@ import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.runTimeDateArea.model.SoObject;
 import com.jvm.runTimeDateArea.model.StringPool;
 import com.jvm.search.ClassPath;
+import com.jvm.search.EntryResult;
 import com.jvm.search.ReadClass;
 import com.jvm.soClassLoader.constants.AccessFlagConstant;
 import com.jvm.soClassLoader.util.FileUtil;
@@ -70,13 +71,12 @@ public class SoClassLoader {
      * @return
      */
     private byte[] readClass(String name){
+        EntryResult result = classFilePath.readClass(name);
         byte[] bytes = null;
-        try{
-            bytes = FileUtil.toByteArray(ReadClass.readClass(name));
-        }catch (IOException e){
-            e.printStackTrace();
-        }finally{}
-        return bytes;
+        if(result!=null&&result.isSuccess()){
+            return result.getData();
+        }
+        return null;
     }
 
     /**
