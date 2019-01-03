@@ -8,7 +8,7 @@ import com.jvm.soClassLoader.domain.SoClass;
 public class ExceptionTable {
     private ExceptionHandler[] exceptionHandlers;
 
-    public ExceptionTable newExceptionTable(CodeAttribute.ExceptionTableEntry[] entries, ConstantPool cp){
+    public ExceptionTable(CodeAttribute.ExceptionTableEntry[] entries, ConstantPool cp){
         ExceptionHandler[] exceptionHandlers = new ExceptionHandler[entries.length];
 
         for(int i=0; i<entries.length; i++){
@@ -16,7 +16,7 @@ public class ExceptionTable {
             exceptionHandlers[i] = new ExceptionHandler(entry.getStartPc(), entry.getEndPc(), entry.getHandlerPc(), getCatchType(entry.getCatchType(), cp));
         }
 
-        return new ExceptionTable(exceptionHandlers);
+        new ExceptionTable(exceptionHandlers);
 
     }
 

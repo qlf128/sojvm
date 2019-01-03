@@ -35,7 +35,8 @@ public class JVM {
     }
 
     public void initVM(){
-        SoClass vmClass = classLoader.loadClass("sun/misc/VM");
+        //SoClass vmClass = classLoader.loadClass("sun/misc/VM");
+        SoClass vmClass = classLoader.loadClass("com/test/Test");
         new ClassInitLogic().initClass(mainThread, vmClass);
         new Interpret().interpret(mainThread, cmd.isVerboseInstFlag());
 

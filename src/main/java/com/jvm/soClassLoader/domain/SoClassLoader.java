@@ -26,8 +26,6 @@ public class SoClassLoader {
 
     private Map<String,SoClass> soClassMap = new HashMap<>();;
 
-    public SoClassLoader(){}
-
     public SoClassLoader(ClassPath classFilePath, boolean verboseFlag) {
         this.classFilePath = classFilePath;
         this.verboseFlag = verboseFlag;

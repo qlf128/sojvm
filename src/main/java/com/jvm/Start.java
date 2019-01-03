@@ -1,9 +1,20 @@
 package com.jvm;
 
+import com.jvm.option.OptionClass;
+import com.jvm.option.OptionProperty;
+import com.jvm.search.ClassPath;
+import com.jvm.soClassLoader.domain.SoClass;
+import com.jvm.soClassLoader.domain.SoClassLoader;
+
 public class Start {
 
-    public void start(){
-        Cmd cmd = new Cmd().parseCmd();
+    public void start(String[] args){
+        Cmd cmd = new Cmd().parseCmd(args);
+
+        //测试数据
+        cmd.setClazz("com/test/Test");
+        cmd.setCpOption("/Users/qlf/code/sojvm/");//文件夹路径
+        cmd.setXjreOption("");//jdk安装目录
 
         if(cmd.isVersionFlag()){
             System.out.println("version 0.0.1");
@@ -15,6 +26,6 @@ public class Start {
     }
 
     public static void main(String[] args){
-        new Start().start();
+        new Start().start(args);
     }
 }

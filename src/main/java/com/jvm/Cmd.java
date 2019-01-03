@@ -1,5 +1,13 @@
 package com.jvm;
 
+import com.jvm.option.OptionClass;
+import com.jvm.option.OptionProperty;
+import com.jvm.search.ClassPath;
+import com.jvm.search.EntryResult;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Cmd {
     private boolean helpFlag;
     private boolean versionFlag;
@@ -10,8 +18,32 @@ public class Cmd {
     private String clazz;
     private String[] args;
 
-    public Cmd parseCmd(){
+    private static final Logger logger = LoggerFactory.getLogger(Cmd.class);
+
+    public Cmd parseCmd(String[] args){
         Cmd cmd = new Cmd();
+
+        OptionProperty optionProperty = OptionClass.getInstance().parse(args);
+        if (!StringUtils.isEmpty(optionProperty.getVersion())) {
+            logger.info("Version:【{}】", optionProperty.getVersion());
+            return cmd;
+        }
+
+        if (StringUtils.isEmpty(optionProperty.getClassName())) {
+            logger.info("参数错误");
+            return cmd;
+        }
+        String jreOption = optionProperty.getJrePath();
+        String cpOption = optionProperty.getUserPath();
+        String className = optionProperty.getClassName();
+        ClassPath classPath = OptionClass.getInstance().parse(jreOption, cpOption);
+        //EntryResult result = classPath.readClass(className);
+        //logger.info("Class:【{}】", result.getData());
+
+        cmd.setXjreOption(jreOption);
+        cmd.setCpOption(cpOption);
+        cmd.setClazz(className);
+        cmd.setArgs(args);
         return cmd;
     }
 
