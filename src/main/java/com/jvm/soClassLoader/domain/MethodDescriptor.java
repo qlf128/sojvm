@@ -1,9 +1,10 @@
 package com.jvm.soClassLoader.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MethodDescriptor {
-    private List<String> paramTypes;
+    private List<String> paramTypes = new ArrayList<>();
     private String returnType;
 
     public void addParameterType(String t){
