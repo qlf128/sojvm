@@ -171,15 +171,18 @@ public class SoClassLoader {
             soltId = soClass.getSuperClass().getInstanceSlotCount();
         }
         Field[] fields = soClass.getFields();
-        for (int i = 0; i < fields.length; i++) {
-            if(!fields[i].isStatic()){
-                fields[i].setSoltId(soltId);
-                soltId++;
-                if(fields[i].isLongOrDouble()){
+        if (fields != null){
+            for (int i = 0; i < fields.length; i++) {
+                if(!fields[i].isStatic()){
+                    fields[i].setSoltId(soltId);
                     soltId++;
+                    if(fields[i].isLongOrDouble()){
+                        soltId++;
+                    }
                 }
             }
         }
+
         soClass.setInstanceSlotCount(soltId);
     }
 
@@ -193,15 +196,18 @@ public class SoClassLoader {
             soltId = soClass.getSuperClass().getInstanceSlotCount();
         }
         Field[] fields = soClass.getFields();
-        for (int i = 0; i < fields.length; i++) {
-            if(fields[i].isStatic()){
-                fields[i].setSoltId(soltId);
-                soltId++;
-                if(fields[i].isLongOrDouble()){
+        if (fields != null){
+            for (int i = 0; i < fields.length; i++) {
+                if(fields[i].isStatic()){
+                    fields[i].setSoltId(soltId);
                     soltId++;
+                    if(fields[i].isLongOrDouble()){
+                        soltId++;
+                    }
                 }
             }
         }
+
         soClass.setStaticSlotCount(soltId);
     }
 
@@ -211,11 +217,14 @@ public class SoClassLoader {
      */
     private void allocAndInitStaticVars(SoClass soClass){
         soClass.setStaticVars(new LocalVars(soClass.getStaticSlotCount()));
-        for (int i = 0; i < soClass.getFields().length; i++) {
-            if (soClass.getFields()[i].isStatic() && soClass.getFields()[i].isFinal()) {
-                initStaticFinalVar(soClass, soClass.getFields()[i]);
+        if (soClass.getFields() != null){
+            for (int i = 0; i < soClass.getFields().length; i++) {
+                if (soClass.getFields()[i].isStatic() && soClass.getFields()[i].isFinal()) {
+                    initStaticFinalVar(soClass, soClass.getFields()[i]);
+                }
             }
         }
+
     }
 
     /**
