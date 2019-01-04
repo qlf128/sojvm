@@ -46,10 +46,13 @@ public class Method extends ClassMember {
 
     public void copyAttributes(MemberInfo cfMethod){
         CodeAttribute codeAttr = cfMethod.getCodeAttribute();
-        this.maxStack = codeAttr.getMaxStack();
-        this.maxLocals = codeAttr.getMaxLocals();
-        this.code = codeAttr.getCode();
-        this.exceptionTable = new ExceptionTable(codeAttr.getExceptionTable(), this.getSoClass().getConstantPool());
+        if(codeAttr != null){
+            this.maxStack = codeAttr.getMaxStack();
+            this.maxLocals = codeAttr.getMaxLocals();
+            this.code = codeAttr.getCode();
+            this.exceptionTable = new ExceptionTable(codeAttr.getExceptionTable(), this.getSoClass().getConstantPool());
+        }
+
     }
 
     public void calcArgSlotCount(){
