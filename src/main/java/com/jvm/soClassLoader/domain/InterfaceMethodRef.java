@@ -1,6 +1,7 @@
 package com.jvm.soClassLoader.domain;
 
 import com.jvm.classReader.model.constant.ConstantInterfaceMethodRefInfo;
+import com.jvm.constant.Constant;
 import com.jvm.soClassLoader.util.MethodLookupUtil;
 
 /**
@@ -12,7 +13,7 @@ public class InterfaceMethodRef extends MemberRef{
 
     public InterfaceMethodRef newInterfaceMethodRef(ConstantPool cp, ConstantInterfaceMethodRefInfo refInfo){
         InterfaceMethodRef ref = new InterfaceMethodRef();
-        ref.setCp(this.getCp());
+        ref.setCp(cp);
         ref.copyMemberRefInfo(refInfo);
         return ref;
     }

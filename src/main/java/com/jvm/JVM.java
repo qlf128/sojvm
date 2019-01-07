@@ -16,18 +16,18 @@ public class JVM {
     private SoThread mainThread;
 
     public JVM(Cmd cmd){
+        this.cmd = cmd;
         ClassPath classPath = new ClassPath();
         ClassPath cp = classPath.parse(cmd.getXjreOption(),cmd.getCpOption());
-        classLoader = new SoClassLoader(cp, cmd.isVerboseInstFlag());
-
-        new JVM(cmd, classLoader, new SoThread());
+        this.classLoader = new SoClassLoader(cp, cmd.isVerboseInstFlag());
+        this.mainThread = new SoThread();
     }
 
-    public JVM(Cmd cmd, SoClassLoader classLoader, SoThread mainThread) {
-        this.cmd = cmd;
-        this.classLoader = classLoader;
-        this.mainThread = mainThread;
-    }
+    //public JVM(Cmd cmd, SoClassLoader classLoader, SoThread mainThread) {
+    //    this.cmd = cmd;
+    //    this.classLoader = classLoader;
+    //    this.mainThread = mainThread;
+    //}
 
     public void start(){
         initVM();
@@ -37,7 +37,7 @@ public class JVM {
     public void initVM(){
         //SoClass vmClass = classLoader.loadClass("sun/misc/VM");
         SoClass vmClass = classLoader.loadClass("com/test/Test");
-        new ClassInitLogic().initClass(mainThread, vmClass);
+        ClassInitLogic.initClass(mainThread, vmClass);
         new Interpret().interpret(mainThread, cmd.isVerboseInstFlag());
 
     }

@@ -11,7 +11,7 @@ public class FieldRef extends MemberRef {
 
     public FieldRef newFieldRef(ConstantPool constantPool, ConstantFieldRefInfo refInfo){
         FieldRef ref = new FieldRef();
-        ref.setCp(this.getCp());
+        ref.setCp(constantPool);
         ref.copyMemberRefInfo(refInfo);
         return ref;
     }

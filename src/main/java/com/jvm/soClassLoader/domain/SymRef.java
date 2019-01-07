@@ -39,7 +39,7 @@ public class SymRef{
     }
 
     public ConstantPool getCp() {
-        return cp;
+        return this.cp;
     }
 
     public void setCp(ConstantPool cp) {

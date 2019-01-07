@@ -21,7 +21,7 @@ public class MethodRef extends MemberRef {
 
     public MethodRef newMethodRef(ConstantPool constantPool, ConstantMethodRefInfo refInfo){
         MethodRef ref = new MethodRef();
-        ref.setCp(this.getCp());
+        ref.setCp(constantPool);
         ref.copyMemberRefInfo(refInfo);
         return ref;
     }
@@ -34,7 +34,8 @@ public class MethodRef extends MemberRef {
     }
 
     private void resolveMethodRef(){
-        SoClass d = super.getCp().getSoClass();
+        ConstantPool constantPool = super.getCp();
+        SoClass d = constantPool.getSoClass();
         SoClass c = super.resolvedClass();
         if (c.isInterface()){
             throw new RuntimeException("IncompatibleClassChangeError");

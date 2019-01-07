@@ -12,7 +12,7 @@ public class ClassRef extends SymRef {
 
     public ClassRef newClassRef(ConstantPool cp, ConstantClassInfo constantClassInfo){
         ClassRef ref = new ClassRef();
-        ref.setCp(super.getCp());
+        ref.setCp(cp);
         ref.setClassName(constantClassInfo.getName());
         return ref;
     }
