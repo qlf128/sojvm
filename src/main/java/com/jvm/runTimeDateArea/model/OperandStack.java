@@ -15,7 +15,7 @@ public class OperandStack {
      */
      private  int  size;
 
-    private  Slot[] slots;
+    private  Slot[] slots=new Slot[1024];
 
 
     public OperandStack(int maxLocals) {

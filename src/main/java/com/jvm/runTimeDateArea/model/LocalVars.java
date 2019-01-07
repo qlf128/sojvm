@@ -9,7 +9,7 @@ import com.jvm.util.DataTypeConvertUtil;
  */
 public class LocalVars {
 
-    private Slot[] slots;
+    private Slot[] slots = new Slot[1024];
 
     public Slot[] getSlots() {
         return slots;
@@ -31,7 +31,10 @@ public class LocalVars {
      *  存取Int 类型   byte short char 能转化为int
      */
     public void setInt(int index ,int value){
-        slots[index].setNum(value);
+        Slot slot = new Slot();
+        slot.setNum(value);
+        slots[index]=slot;
+       // slots[index].setNum(value);
     }
     public int getInt(int index){
         return slots[index].getNum();
@@ -42,7 +45,10 @@ public class LocalVars {
      */
     public void setFloat(int index ,float value){
         int floatToInt = DataTypeConvertUtil.floatToInt(value);
-        slots[index].setNum(floatToInt);
+        Slot slot = new Slot();
+        slot.setNum(floatToInt);
+        slots[index]=slot;
+        //slots[index].setNum(floatToInt);
     }
     public float getFloat(int index){
         int num = slots[index].getNum();
@@ -55,8 +61,12 @@ public class LocalVars {
      */
     public void setDouble(int index ,double value){
         int[] doubleToInt = DataTypeConvertUtil.doubleToInt(value);
-        slots[index].setNum(doubleToInt[0]);
-        slots[index+1].setNum(doubleToInt[1]);
+        Slot slot = new Slot();
+        slot.setNum(doubleToInt[0]);
+        Slot slot1 = new Slot();
+        slot1.setNum(doubleToInt[1]);
+        slots[index]=slot;
+        slots[index+1]=slot1;
     }
     public double getDouble(int index){
         int[] iArray = new int[2];
@@ -70,8 +80,14 @@ public class LocalVars {
      */
     public void setLong(int index ,long value){
         int[] longToInt = DataTypeConvertUtil.longToInt(value);
-        slots[index].setNum(longToInt[0]);
-        slots[index+1].setNum(longToInt[1]);
+        Slot slot = new Slot();
+        slot.setNum(longToInt[0]);
+        Slot slot1 = new Slot();
+        slot1.setNum(longToInt[1]);
+        slots[index]=slot;
+        slots[index+1]=slot1;
+//        slots[index].setNum(longToInt[0]);
+//        slots[index+1].setNum(longToInt[1]);
     }
     public long getLong(int index){
         int[] iArray = new int[2];
@@ -84,7 +100,10 @@ public class LocalVars {
      *  存取Object 类型
      */
     public void setObj(int index ,SoObject value){
-        slots[index].setObj(value);
+        Slot slot = new Slot();
+        slot.setObj(value);
+        slots[index]=slot;
+       // slots[index].setObj(value);
     }
     public SoObject getObj(int index){
         return  slots[index].getObj();
@@ -92,6 +111,7 @@ public class LocalVars {
 
     //存取Slot
     public void setSlot(int index, Slot slot){
+
         this.slots[index] = slot;
     }
 
