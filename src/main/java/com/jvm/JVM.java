@@ -35,8 +35,8 @@ public class JVM {
     }
 
     public void initVM(){
-        //SoClass vmClass = classLoader.loadClass("sun/misc/VM");
-        SoClass vmClass = classLoader.loadClass("com/test/Test");
+        SoClass vmClass = classLoader.loadClass("sun/misc/VM");
+        //SoClass vmClass = classLoader.loadClass("com/test/Test");
         ClassInitLogic.initClass(mainThread, vmClass);
         new Interpret().interpret(mainThread, cmd.isVerboseInstFlag());
 
@@ -60,6 +60,10 @@ public class JVM {
 
     public SoObject createArgsArray(){
         SoClass stringClass = classLoader.loadClass("java/lang/String");
+
+        if(cmd.getArgs() == null || cmd.getArgs().length == 0){
+            return null;
+        }
         int argsLen = cmd.getArgs().length;
         SoArrayObject argsArr = stringClass.arrayClass().newArray(argsLen);
         SoObject[] jArgs = argsArr.refs();

@@ -1,17 +1,24 @@
 package com.jvm.instructions.base;
 
+import com.jvm.Application;
 import com.jvm.runTimeDateArea.model.Frame;
 import com.jvm.runTimeDateArea.model.LocalVars;
 import com.jvm.runTimeDateArea.model.Slot;
 import com.jvm.runTimeDateArea.model.SoThread;
 import com.jvm.soClassLoader.domain.Method;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 定位到需要调用的方法后，java虚拟机要给此方法创建一个新帧并推入JVM栈顶，然后传递参数
  * 这个过程对于4条方法基本相同，此处以单独的文件实现此逻辑
  */
 public class MethodInvokeLogic {
+    private static final Logger logger = LoggerFactory.getLogger(MethodInvokeLogic.class);
+
     public static void invokeMethod(Frame invokeFrame, Method method){
+        logger.info("MethodInvokeLogic. method:{}",method.getName());
+
         //1.创建新帧并推入JVM栈
         SoThread thread = invokeFrame.getThread();
         Frame newFrame = thread.NewFrame(method);
@@ -24,6 +31,7 @@ public class MethodInvokeLogic {
                 newFrame.getLocalVars().setSlot(i, slot);
             }
         }
+        /*
         if (method.isNative()){
             //TODO 暂时跳过所有本地方法
             if (method.getName().equals("registerNatives")){
@@ -34,5 +42,6 @@ public class MethodInvokeLogic {
                 throw new RuntimeException(info);
             }
         }
+        */
     }
 }
