@@ -1,0 +1,12 @@
+/.settings/
+.project
+/.DS_Store
+*.idea/*
+**.iml
+**/*rebel.xml
+*/target
+*/target/*
+*/test/*
+*catalina.base_IS_UNDEFINED/*
+src/main/java/com/hedefu/*
+target/
